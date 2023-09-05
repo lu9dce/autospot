@@ -5,7 +5,6 @@
 * Contacto: castilloeduardo@outlook.com.ar
 * Licencia: Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International
 */
-
 $dirt = __DIR__;
 $qrx = 'https://www.hamqth.com/xml.php?u=xx0php&p=phpdce';
 $ch = curl_init();
