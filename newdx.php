@@ -67,11 +67,17 @@ if (file_exists(__DIR__ . '/1.adi')) {
     unlink(__DIR__ . '/1.adi');
 }
 $ip = "0.0.0.0";
+if ($tportzx == null || $tportzx == "") {
+$tportzx = "52001";
+}
 $tcpPort = $tportzx;
 $tcpSocket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
 socket_bind($tcpSocket, $ip, $tcpPort);
 socket_listen($tcpSocket);
 echo "Esperando conexiones TCP en $ip:$tcpPort..." . PHP_EOL;
+if ($uportzx == null || $uportzx == "") {
+$uportzx = "2223";
+}
 $udpPort = $uportzx;
 $udpSocket = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
 socket_bind($udpSocket, $ip, $udpPort);
