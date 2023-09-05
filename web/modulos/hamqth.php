@@ -21,5 +21,13 @@ curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 curl_setopt( $ch, CURLOPT_CAINFO, $dirt . '/curl-ca-bundle.crt' );
 curl_setopt( $ch, CURLOPT_POSTFIELDS, $post );
 $result = curl_exec( $ch );
-curl_close( $ch );
+    if ( $result === false ) {
+        echo "Error hamqth\n\r";
+    } else {
+        echo "Enviando hamqth\n\r";
+    }
+    curl_close( $ch );
+} else {
+    echo "Error hamqth\n\r";
+}
 ?>

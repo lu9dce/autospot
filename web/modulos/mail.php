@@ -10,7 +10,6 @@ date_default_timezone_set( 'UTC' );
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
-include $dirt . '/variables.php';
 include $dirt . '/busq.php';
 $xml = simplexml_load_file( $dirt . '/xusq.xml' );
 $malmail = $xml->search->email;
@@ -75,7 +74,7 @@ My QRZ https://www.qrz.com/db/$milicencia<br>
     }
 } else {
     $result = '0';
-    echo 'Mail no encontrado\n\r';
+    echo "Mail no encontrado\n\r";
 }
 
 if ( file_exists( $dirt . '/xusq.xml' ) ) {

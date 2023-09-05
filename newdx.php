@@ -16,49 +16,53 @@ if ($os === 'LINUX') {
     exec("for /f \"tokens=5\" %a in ('netstat -aon ^| findstr :80') do taskkill /f /pid %a");
 }
 date_default_timezone_set('UTC');
+function deco() {
+    global $milicencia, $miemail, $minombre, $miqth, $migrid, $dxcomen, $activacluster, $clustertelnet, $clusterport, $activaeqsl, $eqsluser, $eqslpass, $activaaprs, $aprsqth, $aprscode, $activaclublog, $clubuser, $clubmail, $clubpass, $activahrdlog, $hrduser, $hrdcode, $activaargentina, $argenuser, $argenpass, $activaqrz, $qrzuser, $qrzpass, $qrzkey, $activahamqth, $hamuser, $hampass, $activalotw, $activamail, $fondo, $usemail, $useport, $useuser, $usepass, $uportzx, $tportzx, $textqsl;
+    $milicencia = base64_decode($milicencia);
+    $miemail = base64_decode($miemail);
+    $minombre = base64_decode($minombre);
+    $miqth = base64_decode($miqth);
+    $migrid = base64_decode($migrid);
+    $dxcomen = base64_decode($dxcomen);
+    $activacluster = base64_decode($activacluster);
+    $clustertelnet = base64_decode($clustertelnet);
+    $clusterport = base64_decode($clusterport);
+    $activaeqsl = base64_decode($activaeqsl);
+    $eqsluser = base64_decode($eqsluser);
+    $eqslpass = base64_decode($eqslpass);
+    $activaaprs = base64_decode($activaaprs);
+    $aprsqth = base64_decode($aprsqth);
+    $aprscode = base64_decode($aprscode);
+    $activaclublog = base64_decode($activaclublog);
+    $clubuser = base64_decode($clubuser);
+    $clubmail = base64_decode($clubmail);
+    $clubpass = base64_decode($clubpass);
+    $activahrdlog = base64_decode($activahrdlog);
+    $hrduser = base64_decode($hrduser);
+    $hrdcode = base64_decode($hrdcode);
+    $activaargentina = base64_decode($activaargentina);
+    $argenuser = base64_decode($argenuser);
+    $argenpass = base64_decode($argenpass);
+    $activaqrz = base64_decode($activaqrz);
+    $qrzuser = base64_decode($qrzuser);
+    $qrzpass = base64_decode($qrzpass);
+    $qrzkey = base64_decode($qrzkey);
+    $activahamqth = base64_decode($activahamqth);
+    $hamuser = base64_decode($hamuser);
+    $hampass = base64_decode($hampass);
+    $activalotw = base64_decode($activalotw);
+    $activamail = base64_decode($activamail);
+    $fondo = base64_decode($fondo);
+    $usemail = base64_decode($usemail);
+    $useport = base64_decode($useport);
+    $useuser = base64_decode($useuser);
+    $usepass = base64_decode($usepass);
+    $uportzx = base64_decode($uportzx);
+    $tportzx = base64_decode($tportzx);
+    $textqsl = base64_decode($textqsl);
+}
 include __DIR__ . '/web/modulos/variables.php';
-$milicencia = base64_decode($milicencia);
-$miemail = base64_decode($miemail);
-$minombre = base64_decode($minombre);
-$miqth = base64_decode($miqth);
-$migrid = base64_decode($migrid);
-$dxcomen = base64_decode($dxcomen);
-$activacluster = base64_decode($activacluster);
-$clustertelnet = base64_decode($clustertelnet);
-$clusterport = base64_decode($clusterport);
-$activaeqsl = base64_decode($activaeqsl);
-$eqsluser = base64_decode($eqsluser);
-$eqslpass = base64_decode($eqslpass);
-$activaaprs = base64_decode($activaaprs);
-$aprsqth = base64_decode($aprsqth);
-$aprscode = base64_decode($aprscode);
-$activaclublog = base64_decode($activaclublog);
-$clubuser = base64_decode($clubuser);
-$clubmail = base64_decode($clubmail);
-$clubpass = base64_decode($clubpass);
-$activahrdlog = base64_decode($activahrdlog);
-$hrduser = base64_decode($hrduser);
-$hrdcode = base64_decode($hrdcode);
-$activaargentina = base64_decode($activaargentina);
-$argenuser = base64_decode($argenuser);
-$argenpass = base64_decode($argenpass);
-$activaqrz = base64_decode($activaqrz);
-$qrzuser = base64_decode($qrzuser);
-$qrzpass = base64_decode($qrzpass);
-$qrzkey = base64_decode($qrzkey);
-$activahamqth = base64_decode($activahamqth);
-$hamuser = base64_decode($hamuser);
-$hampass = base64_decode($hampass);
-$activalotw = base64_decode($activalotw);
-$activamail = base64_decode($activamail);
-$fondo = base64_decode($fondo);
-$usemail = base64_decode($usemail);
-$useport = base64_decode($useport);
-$useuser = base64_decode($useuser);
-$usepass = base64_decode($usepass);
-$uportzx = base64_decode($uportzx);
-$tportzx = base64_decode($tportzx);
-$textqsl = base64_decode($textqsl);
+deco();
 if (file_exists(__DIR__ . '/1.adi')) {
     unlink(__DIR__ . '/1.adi');
 }
@@ -132,8 +136,9 @@ while (true) {
     $pingresult = exec("ping -4 -n -c 1 8.8.8.8", $outcome, $status);
     if ($status == 0) {
         include __DIR__ . '/web/modulos/variables.php';
+        deco();
         $modules = ['cluster', 'aprs', 'eqsl', 'clublog', 'hrdlog', 'argentina', 'qrz', 'hamqth', 'lotw', 'mail'];
-        foreach ($modules as $module) {
+           foreach ($modules as $module) {
             if (${'activa'.$module} === "yes") {
                 include __DIR__ . "/web/modulos/{$module}.php";
             }
