@@ -1,95 +1,106 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Configuración</title>
     <style>
-        @font-face {
-            font-family: mono;
-        }
-        body {
-            font-family: sans;
-            font-size: 14px;
-            background-color: rgb(50, 50, 50);
-            /* margin: 5px;*/
-            /* padding: 0px;*/
-            /* display: flex; */
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        p {
+    @font-face {
+        font-family: mono;
+    }
+
+    body {
+        font-family: sans;
+        font-size: 14px;
+        background-color: rgb(50, 50, 50);
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    p {
         color: green;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         border-bottom: 2px solid blue;
+    }
+
+    #content {
+        width: 500px;
+        text-align: center;
+        margin: 0 auto;
+        background-color: #F0F0F0;
+        padding: 10px;
+        border: 2px solid black;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.9);
+    }
+
+    @media (max-width: 800px) {
+        body {
+            padding: 20px;
         }
+
         #content {
-            width: 500px;
-            text-align: center;
-            margin: 0 auto;
-            background-color: #F0F0F0;
-            padding: 10px;
-            border: 2px solid black;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.9);
+            width: auto;
         }
-        @media (max-width: 800px) {
-            body {
-                padding: 20px;
-            }
-            #content {
-                width: auto;
-            }
-        }
-        form {
-            margin-top: 20px;
-        }
-        label {
-            font-family: mono;
-            font-size: 12px;
-            display: inline-block;
-            width: 20%;
-            padding: 5px 0;
-        }
-        input[type=text],
-        input[type=password],
-        select {
-            font-family: mono;
-            font-size: 12px;
-            width: 50%;
-            padding: 5px 5px;
-            margin: 1px 0;
-            display: inline-block;
-            border: 2px solid rgb(204, 204, 204);
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        input[type=submit] {
-            font-family: mono;
-            font-size: 18px;
-            width: 150px;
-            background-color: rgb(0, 20, 255);
-            color: white;
-            padding: 5px 20px;
-            margin: 8px 0;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        input[type=submit]:hover {
-            font-family: mono;
-            font-size: 18px;
-            background-color: rgb(255, 40, 40);
-        }
-        h2 {
-            font-family: mono;
-            font-size: 18px;
-            background-color: rgb(0, 20, 255);
-            color: rgb(255, 255, 255);
-        }
-        label {
+    }
+
+    form {
+        margin-top: 20px;
+    }
+
+    label {
+        font-family: mono;
+        font-size: 12px;
+        display: inline-block;
+        width: 20%;
+        padding: 5px 0;
+    }
+
+    input[type=text],
+    input[type=password],
+    select {
+        font-family: mono;
+        font-size: 12px;
+        width: 50%;
+        padding: 5px 5px;
+        margin: 1px 0;
+        display: inline-block;
+        border: 2px solid rgb(204, 204, 204);
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type=submit] {
+        font-family: mono;
+        font-size: 18px;
+        width: 150px;
+        background-color: rgb(0, 20, 255);
+        color: white;
+        padding: 5px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+        font-family: mono;
+        font-size: 18px;
+        background-color: rgb(255, 40, 40);
+    }
+
+    h2 {
+        font-family: mono;
+        font-size: 18px;
+        background-color: rgb(0, 20, 255);
+        color: rgb(255, 255, 255);
+    }
+
+    label {
         text-align: left;
-        }
-        button {
+    }
+
+    button {
         display: inline-block;
         padding: 5px 10px;
         font-size: 10px;
@@ -99,12 +110,13 @@
         color: white;
         background-image: linear-gradient(#005500, #110000);
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
-        }
+    }
     </style>
 </head>
+
 <body>
-<center>
-<pre>
+    <center>
+        <pre>
   <a href="../index.php"><button>Exit</button></a> <a href="menu.php"><button>Reload</button></a>
 <pre>
 </center>
@@ -356,7 +368,7 @@ Hover the mouse over the form input for assistance<br>
 <p>E-Mail data</p>
 <label for="activamail">Activate:</label>
 <input type="text" name="activamail" value="<?php echo $activamail; ?>" title="Enter 'yes' to activate email, 'no' to deactivate"><br>
-<label for="fondo">Background image:</label>
+<label for="fondo">Background:</label>
 <input type="text" name="fondo" value="<?php echo $fondo; ?>" title="Enter the URL of the background JPG image"><br>
 <label for="textqsl">Custom text:</label>
 <input type="text" name="textqsl" value="<?php echo $textqsl; ?>" title="Enter custom text for QSL"><br>
