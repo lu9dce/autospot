@@ -17,6 +17,7 @@ $post = [
     'adif' => $qa
 ];
 $ch = curl_init( 'https://www.hamqth.com/qso_realtime.php' );
+if ( $ch ) {
 curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 curl_setopt( $ch, CURLOPT_CAINFO, $dirt . '/curl-ca-bundle.crt' );
 curl_setopt( $ch, CURLOPT_POSTFIELDS, $post );
