@@ -16,19 +16,19 @@ Auto-Spot is versatile and can run on various platforms, including Linux, Window
 
 ## **Why Choose AUTO-SPOT?**
 
-✅ **Effortless Logging**: Auto-Spot simplifies the process of uploading logbooks for radio enthusiasts. Say goodbye to manual entries and hello to streamlined operation.
+✅ Registration effortlessly: Auto-Spot Simplifies the registration book loading process for radio enthusiasts. Say goodbye to manual inputs and hello to the simplified operation.
 
-✅ **Multi-Platform Support**: With Auto-Spot, you can effortlessly upload to popular platforms like Cluster, APRS, eQSL, Club Log, Log de Argentina, QRZ, HamQTH, and LoTW.
+✅ Multiplatform support: With the self-point, you can load effortlessly on popular platforms such as Cluster, APrs, EQSL, Club Log, Log of Argentina, QRZ, HAMQTH and LOTW.
 
-✅ **QSL via Email**: Sending QSL cards has never been easier. Auto-Spot enables you to send QSL cards via email with just a click.
+✅ QSL by email: sending QSL cards has never been easier. Auto-spot will send QSL cards by email looking for the correspondent's mail automatically
 
-✅ **Flexible Connection Options**: Connect your favorite software through UDP or TCP ports for seamless integration and operation.
+✅ Flexible connection options: Connect your favorite software through UDP or TCP ports for perfect integration and operation.
 
-✅ **Fully Automated**: Auto-Spot takes care of the heavy lifting for you. Enjoy automatic log uploads, leaving you with more time for your passion - radio communication.
+✅ Fully automated: the self-point is responsible for heavy work for you. Enjoy automatic registration loads, leaving it more time for your passion: radio communication.
 
-✅ **Web-Based Stats & Configuration**: Access your personalized web dashboard for statistics and configuration. It's user-friendly and gives you complete control over your data.
+✅ Web -based statistics and configuration: Access your custom web board for statistics and configuration. It is easy to use and gives you complete control over your data.
 
-✅ **Security First**: Your data security matters. Auto-Spot allows you to protect your configuration with a username and password, ensuring your data remains safe and encrypted.
+✅ First security: your data safety is important. Auto-spot allows you to protect your configuration with a username and password, ensuring that your data remains safe and encrypted.
 
 ## **System Requirements**
 
