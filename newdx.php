@@ -5,6 +5,9 @@ require __DIR__ . '/web/modulos/PHPMailer/src/SMTP.php';
 $adiFile = __DIR__ . '/cluster.adi';
 $dworDir = __DIR__ . '/web/';
 $os = strtoupper(PHP_OS);
+if (!file_exists($adiFile)) {
+file_put_contents($adiFile, "");
+}
 if ($os === 'LINUX') {
     exec("sudo fuser -k -n tcp 80");
     $command = 'sudo sh -c "php -S 0.0.0.0:80 -t web/ > /dev/null 2>&1 &"';

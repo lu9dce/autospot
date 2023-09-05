@@ -105,7 +105,7 @@
 <body>
 <center>
 <pre>
-  <a href="../index.php"><button>EXIT</button></a> <a href="menu.php"><button>RECARGA</button></a>
+  <a href="../index.php"><button>Exit</button></a> <a href="menu.php"><button>Reload</button></a>
 <pre>
 </center>
 <?php
@@ -161,9 +161,9 @@ $webpass = base64_decode($webpass);
 $valid_username = $webuser;
 $valid_password = $webpass;
 if (!isset($_SERVER['PHP_AUTH_USER']) || $_SERVER['PHP_AUTH_USER'] != $valid_username || $_SERVER['PHP_AUTH_PW'] != $valid_password) {
-    header('WWW-Authenticate: Basic realm="Acceso restringido"');
+    header('WWW-Authenticate: Basic realm="Restricted access"');
     header('HTTP/1.0 401 Unauthorized');
-    echo '<br><center>Acceso no autorizado.</center>';
+    echo '<br><center>Unauthorized.</center>';
     exit;
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -264,110 +264,111 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 <div id="content">
-<h2>Configuración</h2>
+<h2>Settings</h2>
+Hover the mouse over the form input for assistance<br>
 <form method="post" action="">
-    <p>Acceso a la web</p>
-    <label for="webuser">Usuario:</label>
-    <input type="text" name="webuser" value="<?php echo $webuser; ?>"><br>
-    <label for="webpass">Contraseña:</label>
-    <input type="password" name="webpass" value="<?php echo $webpass; ?>"><br>
-    <p>Datos de usuario</p>
-    <label for="milicencia">Licencia:</label>
-    <input type="text" name="milicencia" value="<?php echo $milicencia; ?>"><br>
-    <label for="miemail">Email:</label>
-    <input type="text" name="miemail" value="<?php echo $miemail; ?>"><br>
-    <label for="minombre">Nombre:</label>
-    <input type="text" name="minombre" value="<?php echo $minombre; ?>"><br>
-    <label for="miqth">QTH:</label>
-    <input type="text" name="miqth" value="<?php echo $miqth; ?>"><br>
-    <label for="migrid">Grid:</label>
-    <input type="text" name="migrid" value="<?php echo $migrid; ?>"><br>
-    <label for="dxcomen">Comentario DX:</label>
-    <input type="text" name="dxcomen" value="<?php echo $dxcomen; ?>"><br>
-    <p>Puertos a escuchar</p>
-    <label for="dxcomen">UDP port:</label>
-    <input type="text" name="uportzx" value="<?php echo $uportzx; ?>"><br>
-    <label for="dxcomen">TCP port:</label>
-    <input type="text" name="tportzx" value="<?php echo $tportzx; ?>"><br>
-    <p>Datos del cluster</p>
-    <label for="activacluster">Activa:</label>
-    <input type="text" name="activacluster" value="<?php echo $activacluster; ?>"><br>
-    <label for="clustertelnet">IP:</label>
-    <input type="text" name="clustertelnet" value="<?php echo $clustertelnet; ?>"><br>
-    <label for="clusterport">Puerto:</label>
-    <input type="text" name="clusterport" value="<?php echo $clusterport; ?>"><br>
-    <p>Datos de EQSL</p>
-    <label for="activaeqsl">Activa:</label>
-    <input type="text" name="activaeqsl" value="<?php echo $activaeqsl; ?>"><br>
-    <label for="eqsluser">Usuario:</label>
-    <input type="text" name="eqsluser" value="<?php echo $eqsluser; ?>"><br>
-    <label for="eqslpass">Contraseña:</label>
-    <input type="password" name="eqslpass" value="<?php echo $eqslpass; ?>"><br>
-    <p>Datos de APRS</p>
-    <label for="activaaprs">Activa:</label>
-    <input type="text" name="activaaprs" value="<?php echo $activaaprs; ?>"><br>
-    <label for="aprsqth">Coordenadas:</label>
-    <input type="text" name="aprsqth" value="<?php echo $aprsqth; ?>"><br>
-    <label for="aprscode">Passcode:</label>
-    <input type="password" name="aprscode" value="<?php echo $aprscode; ?>"><br>
-    <p>Datos de Club Log</p>
-    <label for="activaclublog">Activa:</label>
-    <input type="text" name="activaclublog" value="<?php echo $activaclublog; ?>"><br>
-    <label for="clubuser">Usuario:</label>
-    <input type="text" name="clubuser" value="<?php echo $clubuser; ?>"><br>
-    <label for="clubmail">Email:</label>
-    <input type="text" name="clubmail" value="<?php echo $clubmail; ?>"><br>
-    <label for="clubpass">Contraseña:</label>
-    <input type="password" name="clubpass" value="<?php echo $clubpass; ?>"><br>
-    <p>Datos de HRDLOG</p>
-    <label for="activahrdlog">Activa:</label>
-    <input type="text" name="activahrdlog" value="<?php echo $activahrdlog; ?>"><br>
-    <label for="hrduser">Usuario:</label>
-    <input type="text" name="hrduser" value="<?php echo $hrduser; ?>"><br>
-    <label for="hrdcode">Código:</label>
-    <input type="password" name="hrdcode" value="<?php echo $hrdcode; ?>"><br>
-    <p>Datos de Log Argentina</p>
-    <label for="activaargentina">Activa:</label>
-    <input type="text" name="activaargentina" value="<?php echo $activaargentina; ?>"><br>
-    <label for="argenuser">Usuario:</label>
-    <input type="text" name="argenuser" value="<?php echo $argenuser; ?>"><br>
-    <label for="argenpass">Contraseña:</label>
-    <input type="password" name="argenpass" value="<?php echo $argenpass; ?>"><br>
-    <p>Datos de QRZ</p>
-    <label for="activaqrz">Activa:</label>
-    <input type="text" name="activaqrz" value="<?php echo $activaqrz; ?>"><br>
-    <label for="qrzuser">Usuario:</label>
-    <input type="text" name="qrzuser" value="<?php echo $qrzuser; ?>"><br>
-    <label for="qrzpass">Contraseña:</label>
-    <input type="password" name="qrzpass" value="<?php echo $qrzpass; ?>"><br>
-    <label for="qrzkey">KEY:</label>
-    <input type="password" name="qrzkey" value="<?php echo $qrzkey; ?>"><br>
-    <p>Datos de HAMQTH</p>
-    <label for="activahamqth">Activa:</label>
-    <input type="text" name="activahamqth" value="<?php echo $activahamqth; ?>"><br>
-    <label for="hamuser">Usuario:</label>
-    <input type="text" name="hamuser" value="<?php echo $hamuser; ?>"><br>
-    <label for="hampass">Contraseña:</label>
-    <input type="password" name="hampass" value="<?php echo $hampass; ?>"><br>
-    <p>Datos de LoTW</p>
-    <label for="activalotw">Activa:</label>
-    <input type="text" name="activalotw" value="<?php echo $activalotw; ?>"><br>
-    <p>Datos para E-Mail</p>
-    <label for="activamail">Activa:</label>
-    <input type="text" name="activamail" value="<?php echo $activamail; ?>"><br>
-    <label for="fondo">Fondo:</label>
-    <input type="text" name="fondo" value="<?php echo $fondo; ?>"><br>
-    <label for="textqsl">Texto QSL:</label>
-    <input type="text" name="textqsl" value="<?php echo $textqsl; ?>"><br>
-    <label for="usemail">SMTP IP:</label>
-    <input type="text" name="usemail" value="<?php echo $usemail; ?>"><br>
-    <label for="useport">SMTP Puerto:</label>
-    <input type="text" name="useport" value="<?php echo $useport; ?>"><br>
-    <label for="useuser">Mail:</label>
-    <input type="text" name="useuser" value="<?php echo $useuser; ?>"><br>
-    <label for="usepass">Contraseña:</label>
-    <input type="password" name="usepass" value="<?php echo $usepass; ?>"><br>
-    <input type="submit" value="Guardar">
+<p>Web access</p>
+<label for="webuser">User:</label>
+<input type="text" name="webuser" value="<?php echo $webuser; ?>" title="Enter your username"><br>
+<label for="webpass">Password:</label>
+<input type="password" name="webpass" value="<?php echo $webpass; ?>" title="Enter your password"><br>
+<p>User data</p>
+<label for="milicencia">License:</label>
+<input type="text" name="milicencia" value="<?php echo $milicencia; ?>" title="Enter your license number"><br>
+<label for="miemail">Email:</label>
+<input type="text" name="miemail" value="<?php echo $miemail; ?>" title="Enter your email address"><br>
+<label for="minombre">Name:</label>
+<input type="text" name="minombre" value="<?php echo $minombre; ?>" title="Enter your full name"><br>
+<label for="miqth">QTH:</label>
+<input type="text" name="miqth" value="<?php echo $miqth; ?>" title="Enter your QTH (location)"><br>
+<label for="migrid">Grid:</label>
+<input type="text" name="migrid" value="<?php echo $migrid; ?>" title="Enter your grid locator"><br>
+<label for="dxcomen">Coment DX:</label>
+<input type="text" name="dxcomen" value="<?php echo $dxcomen; ?>" title="Enter your DX comment"><br>
+<p>Ports input</p>
+<label for="uportzx">UDP port:</label>
+<input type="text" name="uportzx" value="<?php echo $uportzx; ?>" title="Enter the UDP port number"><br>
+<label for="tportzx">TCP port:</label>
+<input type="text" name="tportzx" value="<?php echo $tportzx; ?>" title="Enter the TCP port number"><br>
+<p>Cluster data</p>
+<label for="activacluster">Activate:</label>
+<input type="text" name="activacluster" value="<?php echo $activacluster; ?>" title="Enter 'yes' to activate the cluster, 'no' to deactivate"><br>
+<label for="clustertelnet">IP:</label>
+<input type="text" name="clustertelnet" value="<?php echo $clustertelnet; ?>" title="Enter the IP address of the cluster server"><br>
+<label for="clusterport">Port:</label>
+<input type="text" name="clusterport" value="<?php echo $clusterport; ?>" title="Enter the port number for the cluster connection"><br>
+<p>eQSL data</p>
+<label for="activaeqsl">Activate:</label>
+<input type="text" name="activaeqsl" value="<?php echo $activaeqsl; ?>" title="Enter 'yes' to activate eQSL, 'no' to deactivate"><br>
+<label for="eqsluser">User:</label>
+<input type="text" name="eqsluser" value="<?php echo $eqsluser; ?>" title="Enter your eQSL username"><br>
+<label for="eqslpass">Password:</label>
+<input type="password" name="eqslpass" value="<?php echo $eqslpass; ?>" title="Enter your eQSL password"><br>
+<p>APRS data</p>
+<label for="activaaprs">Activate:</label>
+<input type="text" name="activaaprs" value="<?php echo $activaaprs; ?>" title="Enter 'yes' to activate APRS, 'no' to deactivate"><br>
+<label for="aprsqth">Coordinates:</label>
+<input type="text" name="aprsqth" value="<?php echo $aprsqth; ?>" title="Enter your APRS coordinates"><br>
+<label for="aprscode">Passcode:</label>
+<input type="password" name="aprscode" value="<?php echo $aprscode; ?>" title="Enter your APRS passcode"><br>
+<p>Club Log data</p>
+<label for="activaclublog">Activate:</label>
+<input type="text" name="activaclublog" value="<?php echo $activaclublog; ?>" title="Enter 'yes' to activate Club Log, 'no' to deactivate"><br>
+<label for="clubuser">User:</label>
+<input type="text" name="clubuser" value="<?php echo $clubuser; ?>" title="Enter your Club Log username"><br>
+<label for="clubmail">Email:</label>
+<input type="text" name="clubmail" value="<?php echo $clubmail; ?>" title="Enter your Club Log email address"><br>
+<label for="clubpass">Password:</label>
+<input type="password" name="clubpass" value="<?php echo $clubpass; ?>" title="Enter your Club Log password"><br>
+<p>HRDLOG data</p>
+<label for="activahrdlog">Activate:</label>
+<input type="text" name="activahrdlog" value="<?php echo $activahrdlog; ?>" title="Enter 'yes' to activate HRDLOG, 'no' to deactivate"><br>
+<label for="hrduser">User:</label>
+<input type="text" name="hrduser" value="<?php echo $hrduser; ?>" title="Enter your HRDLOG username"><br>
+<label for="hrdcode">Code:</label>
+<input type="password" name="hrdcode" value="<?php echo $hrdcode; ?>" title="Enter your HRDLOG code"><br>
+<p>Log Argentina data</p>
+<label for="activaargentina">Activate:</label>
+<input type="text" name="activaargentina" value="<?php echo $activaargentina; ?>" title="Enter 'yes' to activate Log Argentina, 'no' to deactivate"><br>
+<label for="argenuser">User:</label>
+<input type="text" name="argenuser" value="<?php echo $argenuser; ?>" title="Enter your Log Argentina username"><br>
+<label for="argenpass">Password:</label>
+<input type="password" name="argenpass" value="<?php echo $argenpass; ?>" title="Enter your Log Argentina password"><br>
+<p>QRZ data</p>
+<label for="activaqrz">Activate:</label>
+<input type="text" name="activaqrz" value="<?php echo $activaqrz; ?>" title="Enter 'yes' to activate QRZ, 'no' to deactivate"><br>
+<label for="qrzuser">User:</label>
+<input type="text" name="qrzuser" value="<?php echo $qrzuser; ?>" title="Enter your QRZ username"><br>
+<label for="qrzpass">Password:</label>
+<input type="password" name="qrzpass" value="<?php echo $qrzpass; ?>" title="Enter your QRZ password"><br>
+<label for="qrzkey">KEY:</label>
+<input type="password" name="qrzkey" value="<?php echo $qrzkey; ?>" title="Enter your QRZ KEY"><br>
+<p>HAMQTH data</p>
+<label for="activahamqth">Activate:</label>
+<input type="text" name="activahamqth" value="<?php echo $activahamqth; ?>" title="Enter 'yes' to activate HAMQTH, 'no' to deactivate"><br>
+<label for="hamuser">User:</label>
+<input type="text" name="hamuser" value="<?php echo $hamuser; ?>" title="Enter your HAMQTH username"><br>
+<label for="hampass">Password:</label>
+<input type="password" name="hampass" value="<?php echo $hampass; ?>" title="Enter your HAMQTH password"><br>
+<p>LoTW data</p>
+<label for="activalotw">Activate:</label>
+<input type="text" name="activalotw" value="<?php echo $activalotw; ?>" title="Enter 'yes' to activate LoTW, 'no' to deactivate"><br>
+<p>E-Mail data</p>
+<label for="activamail">Activate:</label>
+<input type="text" name="activamail" value="<?php echo $activamail; ?>" title="Enter 'yes' to activate email, 'no' to deactivate"><br>
+<label for="fondo">Background image:</label>
+<input type="text" name="fondo" value="<?php echo $fondo; ?>" title="Enter the URL of the background JPG image"><br>
+<label for="textqsl">Custom text:</label>
+<input type="text" name="textqsl" value="<?php echo $textqsl; ?>" title="Enter custom text for QSL"><br>
+<label for="usemail">SMTP IP:</label>
+<input type="text" name="usemail" value="<?php echo $usemail; ?>" title="Enter the SMTP IP address"><br>
+<label for="useport">SMTP Port:</label>
+<input type="text" name="useport" value="<?php echo $useport; ?>" title="Enter the SMTP port number"><br>
+<label for="useuser">Mail:</label>
+<input type="text" name="useuser" value="<?php echo $useuser; ?>" title="Enter your email address"><br>
+<label for="usepass">Password:</label>
+<input type="password" name="usepass" value="<?php echo $usepass; ?>" title="Enter your email password"><br>
+<input type="submit" value="Submit">
 </form>
 </div>
 <br><br><br><br>
