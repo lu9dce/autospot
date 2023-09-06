@@ -4,15 +4,15 @@
 **Copyright:** 2023 Eduardo Castillo  
 **Contact:** castilloeduardo@outlook.com.ar  
 **License:** [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International](https://creativecommons.org/licenses/by-nc-nd/4.0/)
-
 [I recommend Autospot to you ULTRON](https://github.com/lu9dce/ultron)
-
-![](https://pbs.twimg.com/media/F5QS6tEXEAA9WhI?format=png&name=small)
-
-### [DONATE](https://www.paypal.com/donate/?hosted_button_id=WHG8FQRMAPA3E)
-
+<br><center><img src="https://pbs.twimg.com/media/F5QS6tEXEAA9WhI?format=png&name=small" width="350" height="240"></center>
+<hr>
+<center><img src="https://pbs.twimg.com/media/F5Tij_FWUAAWPrF?format=jpg" width="350" height="240"></center><br>
 
 Auto-Spot is your one-stop solution for online amateur radio logging. It's more than just a program; it's your gateway to seamless radio communication and a hassle-free QSO experience! 🌐
+
+👉 [**Donate to Support Us!**](https://www.paypal.com/donate/?hosted_button_id=WHG8FQRMAPA3E)
+
 
 ## **Where Can Auto-Spot Run?**
 
@@ -74,6 +74,5 @@ Auto-Spot requires PHP to operate. To install PHP on your system, follow these s
 
 Auto-Spot can run on various platforms where PHP is supported. It's versatile and suitable for Linux and Windows systems.
 
-👉 [**Donate to Support Us!**](https://www.paypal.com/donate/?hosted_button_id=WHG8FQRMAPA3E)
 
 Auto-Spot - Where simplicity meets the world of ham radio! 📡🌟
