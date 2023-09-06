@@ -1,6 +1,6 @@
 # 🚀 **AUTO-SPOT: Making Ham Radio Simple!** 📻
 
-**Created by:** LU9DCE
+**Created by:** https://lu9dce.github.io/
 
 **Copyright:** 2023 Eduardo Castillo  
 
@@ -8,7 +8,7 @@
 
 **License:** https://creativecommons.org/licenses/by-nc-nd/4.0/
 
-**I recommend: ULTRON:** https://github.com/lu9dce/ultron
+**I recommend ULTRON:** https://github.com/lu9dce/ultron
 
 <br><img src="https://pbs.twimg.com/media/F5QS6tEXEAA9WhI?format=png&name=small" width="350" height="240">
 <hr>
