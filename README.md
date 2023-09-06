@@ -1,10 +1,14 @@
 # 🚀 **AUTO-SPOT: Making Ham Radio Simple!** 📻
 
-**Created by:** LU9DCE  
+**Created by:** LU9DCE
+
 **Copyright:** 2023 Eduardo Castillo  
+
 **Contact:** castilloeduardo@outlook.com.ar  
-**License:** [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International](https://creativecommons.org/licenses/by-nc-nd/4.0/)
-[I recommend Autospot to you ULTRON](https://github.com/lu9dce/ultron)
+
+**License:** https://creativecommons.org/licenses/by-nc-nd/4.0/
+
+**I recommend: ULTRON:** https://github.com/lu9dce/ultron
 
 <br><img src="https://pbs.twimg.com/media/F5QS6tEXEAA9WhI?format=png&name=small" width="350" height="240">
 <hr>
@@ -22,9 +26,9 @@ Auto-Spot is versatile and can run on various platforms, including Linux, Window
 
 ✅ Registration effortlessly: Auto-Spot Simplifies the registration book loading process for radio enthusiasts. Say goodbye to manual inputs and hello to the simplified operation.
 
-✅ Multiplatform support: With the self-point, you can load effortlessly on popular platforms such as Cluster, APrs, EQSL, Club Log, Log of Argentina, QRZ, HAMQTH and LOTW.
+✅ Multiplatform support: With the self-point, you can load effortlessly on popular platforms such as Cluster, APRS, EQSL, Club Log, Log of Argentina, QRZ, HAMQTH and LOTW.
 
-✅ QSL by email: sending QSL cards has never been easier. Auto-spot will send QSL cards by email looking for the correspondent's mail automatically
+✅ QSL by email: sending QSL cards has never been easier. Auto-spot will send QSL cards by email, automatically determining whether to send them in Spanish or English.
 
 ✅ Flexible connection options: Connect your favorite software through UDP or TCP ports for perfect integration and operation.
 
