@@ -5,9 +5,9 @@
 **Contact:** castilloeduardo@outlook.com.ar  
 **License:** [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 [I recommend Autospot to you ULTRON](https://github.com/lu9dce/ultron)
-<br><center><img src="https://pbs.twimg.com/media/F5QS6tEXEAA9WhI?format=png&name=small" width="350" height="240"></center>
+
+<br><img src="https://pbs.twimg.com/media/F5QS6tEXEAA9WhI?format=png&name=small" width="350" height="240">
 <hr>
-<center><img src="https://pbs.twimg.com/media/F5Tij_FWUAAWPrF?format=jpg" width="350" height="240"></center><br>
 
 Auto-Spot is your one-stop solution for online amateur radio logging. It's more than just a program; it's your gateway to seamless radio communication and a hassle-free QSO experience! 🌐
 
@@ -33,6 +33,8 @@ Auto-Spot is versatile and can run on various platforms, including Linux, Window
 ✅ Web -based statistics and configuration: Access your custom web board for statistics and configuration. It is easy to use and gives you complete control over your data.
 
 ✅ First security: your data safety is important. Auto-spot allows you to protect your configuration with a username and password, ensuring that your data remains safe and encrypted.
+
+<img src="https://pbs.twimg.com/media/F5Tij_FWUAAWPrF?format=jpg" width="350" height="240">
 
 ## **System Requirements**
 
