@@ -25,12 +25,12 @@ if ( $ch ) {
 
     $result = curl_exec( $ch );
     if ( $result === false ) {
-        echo 'Error qrz\n\r';
+        echo "Error qrz\n\r";
     } else {
-        echo 'Enviando qrz\n\r';
+        echo "Enviando qrz\n\r";
     }
     curl_close( $ch );
 } else {
-    echo 'Error qrz\n\r';
+    echo "Error qrz\n\r";
 }
 ?>

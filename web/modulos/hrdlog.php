@@ -20,12 +20,12 @@ if ( $ch ) {
     curl_setopt( $ch, CURLOPT_POSTFIELDS, $post );
     $result = curl_exec( $ch );
     if ( $result === false ) {
-        echo 'Error hrdlog\n\r';
+        echo "Error hrdlog\n\r";
     } else {
-        echo 'Enviando hrdlog\n\r';
+        echo "Enviando hrdlog\n\r";
     }
     curl_close( $ch );
 } else {
-    echo 'Error hdrlog\n\r';
+    echo "Error hdrlog\n\r";
 }
 ?>

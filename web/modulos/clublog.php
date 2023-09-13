@@ -23,12 +23,12 @@ if ( $ch ) {
     curl_setopt( $ch, CURLOPT_POSTFIELDS, $post );
     $result = curl_exec( $ch );
     if ( $result === false ) {
-        echo 'Error clublog\n\r';
+        echo "Error clublog\n\r";
     } else {
-        echo 'Enviando clublog\n\r';
+        echo "Enviando clublog\n\r";
     }
     curl_close( $ch );
 } else {
-    echo 'Error clublog\n\r';
+    echo "Error clublog\n\r";
 }
 ?>

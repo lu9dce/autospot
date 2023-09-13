@@ -5,7 +5,7 @@
 * Contacto: castilloeduardo@outlook.com.ar
 * Licencia: Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International
 */
-$apap = '';
+$apap = "";
 $at = "DX $call $freq $mode Send $rst_sent Rcvd $rst_rcvd";
 $da = fsockopen( $clustertelnet, $clusterport, $errno, $errstr, 10 );
 if ( $da ) {
@@ -17,11 +17,11 @@ if ( $da ) {
         $apap .= fgets( $da );
     }
     sleep( 1 );
-    fwrite( $da, 'b\r\n' );
+    fwrite( $da, "b\r\n" );
     sleep( 1 );
     fclose( $da );
-    echo 'Enviando cluster\n\r';
+    echo "Enviando cluster\n\r";
 } else {
-    echo 'Error en la conexión cluster\n\r';
+    echo "Error en la conexión cluster\n\r";
 }
 ?>

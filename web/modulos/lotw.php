@@ -24,8 +24,8 @@ foreach ( $possible_dirs as $dir ) {
 if ( !empty( $tqsl_location ) ) {
     $command = 'export DISPLAY=:1 && ' . $tqsl_location . ' -c ' . $milicencia . ' -l ' . $milicencia . ' -q -d -u ' . $cf . ' -a all > /dev/null 2>&1 &';
     $output = shell_exec( $command );
-    echo 'Enviando lotw\n\r';
+    echo "Enviando lotw\n\r";
 } else {
-    echo 'Error tqsl no found\n\r';
+    echo "Error tqsl no found\n\r";
 }
 ?>

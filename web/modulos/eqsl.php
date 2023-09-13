@@ -20,12 +20,12 @@ if ( $ch ) {
     curl_setopt( $ch, CURLOPT_POSTFIELDS, $post );
     $result = curl_exec( $ch );
     if ( $result === false ) {
-        echo 'Error eqsl\n\r';
+        echo "Error eqsl\n\r";
     } else {
-        echo 'Enviando eqsl\n\r';
+        echo "Enviando eqsl\n\r";
     }
     curl_close( $ch );
 } else {
-    echo 'Error eqsl\n\r';
+    echo "Error eqsl\n\r";
 }
 ?>

@@ -13,12 +13,12 @@ if ( $ch ) {
     curl_setopt( $ch, CURLOPT_CAINFO, $dirt . '/curl-ca-bundle.crt' );
     $result = curl_exec( $ch );
     if ( $result === false ) {
-        echo 'Error log argentina\n\r';
+        echo "Error log argentina\n\r";
     } else {
-        echo 'Enviando log argentina\n\r';
+        echo "Enviando log argentina\n\r";
     }
     curl_close( $ch );
 } else {
-    echo 'Error log argentina\n\r';
+    echo "Error log argentina\n\r";
 }
 ?>

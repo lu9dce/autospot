@@ -209,6 +209,7 @@ $rutaArchivo = $archivoLog;
 $lineasArchivo = file($rutaArchivo, FILE_IGNORE_NEW_LINES);
 $qsos = array();
 foreach ($lineasArchivo as $linea) {
+    $linea = strtoupper($linea);
     if (preg_match("/$fechaActual/", $linea)) {
         $regex = '/<([A-Z0-9_]+):(\d+)(:[A-Z])?>([^<\s]+)\s*/';
         preg_match_all($regex, $linea, $matches, PREG_SET_ORDER);

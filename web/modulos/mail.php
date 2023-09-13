@@ -10,6 +10,7 @@ date_default_timezone_set( 'UTC' );
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+//include $dirt . '/variables.php';
 include $dirt . '/busq.php';
 $xml = simplexml_load_file( $dirt . '/xusq.xml' );
 $malmail = $xml->search->email;
