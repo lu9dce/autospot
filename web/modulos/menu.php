@@ -102,14 +102,15 @@
     }
 
     button {
+        font-weight: bold;
         display: inline-block;
         padding: 5px 10px;
-        font-size: 10px;
+        font-size: 14px;
         border: 2px solid;
         border-radius: 15px;
         cursor: pointer;
         color: white;
-        background-image: linear-gradient(#005500, #110000);
+        background-image: linear-gradient(#00AA00, #101010);
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
     }
 
