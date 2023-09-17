@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Language" content="en">
     <title>Configuración</title>
     <style>
     @font-face {
@@ -111,6 +112,17 @@
         background-image: linear-gradient(#005500, #110000);
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
     }
+
+    .red-div {
+            background-color: red;
+            color: white;
+            padding: 10px;
+            font-weight: bold;
+    }
+
+    .excluir {
+        margin-top: -20px;
+}
     </style>
 </head>
 
@@ -278,6 +290,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div id="content">
 <h2>Settings</h2>
 Hover the mouse over the form input for assistance<br>
+<p>Upload new adi</p>
+<div class="red-div">
+        Warning: When uploading a new ADI,
+        use a complete one; this will
+        overwrite the current ADI.
+    </div>
+    <?php
+session_start();
+?>
+    <form class="excluir" action="upadi.php" method="POST" enctype="multipart/form-data">
+    <br><label for="archivo"></label>
+    <br><input type="file" name="archivo" id="archivo" accept=".adi">
+    <br><input type="submit" value="Upload File"><br>
+    <?php
+    if (isset($_SESSION['upload_message'])) {
+        echo '<div>' . $_SESSION['upload_message'] . '</div>';
+        unset($_SESSION['upload_message']); // Limpia la variable de sesión después de mostrarla
+    }
+    ?>
+</form>
 <form method="post" action="">
 <p>Web access</p>
 <label for="webuser">User:</label>
