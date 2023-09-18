@@ -138,6 +138,66 @@ $textqsl = base64_decode($textqsl);
     <button onclick="location.href='modulos/menu.php'">Menu</button><br>
     </div><br>
 <?php
+
+function calcDist($loc1, $loc2) {
+    $ll1 = locToLL($loc1);
+    $ll2 = locToLL($loc2);
+    $dist = calcDistLL($ll1[0], $ll1[1], $ll2[0], $ll2[1]);
+    return $dist;
+}
+
+function locToLL($loc) {
+    $ln = (ord($loc[0]) - 65) * 20 - 180;
+    $lt = (ord($loc[1]) - 65) * 10 - 90;
+    $ln += intval($loc[2]) * 2;
+    $lt += intval($loc[3]) * 1;
+    return array($lt, $ln);
+}
+
+function calcDistLL($lt1, $ln1, $lt2, $ln2) {
+    $r = 6371;
+    $lt1 = deg2rad($lt1);
+    $ln1 = deg2rad($ln1);
+    $lt2 = deg2rad($lt2);
+    $ln2 = deg2rad($ln2);
+    $dlt = $lt2 - $lt1;
+    $dln = $ln2 - $ln1;
+    $a = sin($dlt / 2) * sin($dlt / 2) + cos($lt1) * cos($lt2) * sin($dln / 2) * sin($dln / 2);
+    $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+    $dist = $r * $c;
+    return $dist;
+}
+
+function load_cty_array()
+{
+    $cty_array = array();
+    $dirt = __DIR__ . '/cty.csv';
+    $handle = fopen($dirt, "r");
+    while (($raw_string = fgets($handle)) !== false) {
+        $row = str_getcsv($raw_string);
+        $array = explode(' ', $row [9]);
+        foreach ($array as &$value) {
+            $value = str_replace(';', '', $value);
+            $cty_array [$value] = $row [1];
+        }
+    }
+    fclose($handle);
+    return $cty_array;
+}
+$cty_array = load_cty_array();
+function locate($licrx)
+{
+    global $cty_array;
+    $z = strlen($licrx);
+    for($i = $z; $i >= 1; $i --) {
+        $licrx = substr($licrx, 0, $i);
+        if (isset($cty_array [$licrx])) {
+            return $cty_array [$licrx];
+        }
+    }
+    return "??";
+}
+
 $fechaActual = date('Ym');
 $archivoLog = dirname(__DIR__) . "/cluster.adi";
 $logContenido = file_get_contents($archivoLog);
@@ -322,9 +382,16 @@ $table .= '<th>Date</th>';
 $table .= '<th>Time</th>';
 $table .= '<th>Band</th>';
 $table .= '<th>Freq</th>';
+$table .= '<th>Country</th>';
+$table .= '<th>Dist Km</th>';
 $table .= '</tr>';
 foreach ($resultados as $i => $resultado) {
     $gg = $n - $i;
+    $loc2 = $migrid;
+    $loc1 = $resultado['gridsquare'];
+    if ($loc1 == "") {
+    $loc1 = $loc2;
+    }
     $table .= '<tr>';
     $table .= '<td>' . $gg . '</td>';
     $table .= '<td>' . $resultado['call'] . '</td>';
@@ -336,6 +403,12 @@ foreach ($resultados as $i => $resultado) {
     $table .= '<td>' . $resultado['time_on'] . '</td>';
     $table .= '<td>' . $resultado['band'] . '</td>';
     $table .= '<td>' . $resultado['freq'] . '</td>';
+    $table .= '<td>' . locate($resultado['call']) . '</td>';
+    $dista = number_format(calcDist($loc1, $loc2), 0, '', '.');
+    if ($dista == "0") {
+    $dista = "No Grid";
+    }
+    $table .= '<td>' . $dista . '</td>';
     $table .= '</tr>';
 }
 $table .= '</table>';
