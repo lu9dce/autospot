@@ -119,7 +119,7 @@ while (true) {
     $last_dx = strtoupper($lastline);
     file_put_contents(__DIR__ . '/1.adi', $last_dx, FILE_APPEND);
     $regex = '/<([A-Z0-9_]+):(\d+)(:[A-Z])?>([^<\s]+)\s*/';
-    preg_match_all($regex, $lastline, $matches, PREG_SET_ORDER);
+    preg_match_all($regex, $last_dx, $matches, PREG_SET_ORDER);
     $qso = [];
     foreach ($matches as $i => $match) {
         $field = $match[1];
