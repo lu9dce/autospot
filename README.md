@@ -13,6 +13,22 @@
 <br><img src="https://pbs.twimg.com/media/F5QS6tEXEAA9WhI?format=png&name=small" width="350" height="240">
 <hr>
 
+To run PHP in an optimized way, use the following commands:
+
+To run it directly in the command line:
+
+```bash
+php -d opcache.enable_cli=1 -d opcache.jit_buffer_size=64M -d opcache.jit=1255 -d memory_limit=-1 newdx.php
+```
+
+For example, to run it in the background, you can use:
+
+```bash
+tmux new-session -d -s cluster 'cd /root/cluster && php -d opcache.enable_cli=1 -d opcache.jit_buffer_size=64M -d opcache.jit=1255 -d memory_limit=-1 newdx.php && tmux detach-client'
+```
+
+These commands will help you run your PHP script with optimizations either in the foreground or in the background using tmux.
+
 Auto-Spot is your one-stop solution for online amateur radio logging. It's more than just a program; it's your gateway to seamless radio communication and a hassle-free QSO experience! 🌐
 
 👉 [**Donate to Support Us!**](https://www.paypal.com/donate/?hosted_button_id=WHG8FQRMAPA3E)

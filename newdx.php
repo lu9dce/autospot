@@ -5,6 +5,49 @@ require __DIR__ . '/web/modulos/PHPMailer/src/SMTP.php';
 $adiFile = __DIR__ . '/cluster.adi';
 $dworDir = __DIR__ . '/web/';
 $os = strtoupper(PHP_OS);
+function procqso($data) {
+    $data = strtoupper($data);
+    $regex = '/<([A-Z0-9_]+):(\d+)(:[A-Z])?>([^<]+)\s*/';
+    preg_match_all($regex, $data, $matches, PREG_SET_ORDER);
+    $qsos = array();
+    $qso = array();
+    foreach ($matches as $i => $match) {
+        $field = strtolower($match[1]); 
+        $length = $match[2];
+        $type = $match[3];
+        $content = $match[4];
+        $qso[$field] = $content;
+        $is_last_element = ($i === count($matches) - 1);
+        if ($is_last_element || ($i < count($matches) - 1 && $matches[$i + 1][1] === 'EOR')) {
+            $qsos[] = $qso;
+            $qso = array();
+        }
+    }
+    return $qsos;
+}
+function genadi($qsos) {
+    $adi_entries = array_map(function ($qso) {
+        $adi_entry = '';
+        foreach ($qso as $field => $content) {
+            $content = trim($content);
+            $field_length = strlen($content);
+            $adi_entry .= "<$field:" . $field_length . ">$content ";
+        }
+        $adi_entry .= '<eor>';
+        return $adi_entry;
+    }, $qsos);
+    return $adi_entries;
+}
+function qsotovar($array) {
+    $variables = [];
+    foreach ($array as $campo => $valor) {
+        $valor = rtrim($valor);
+        global ${$campo};
+        ${$campo} = $valor;
+        $variables[$campo] = $valor;
+    }
+    return $variables;
+}
 if (!file_exists($adiFile)) {
 file_put_contents($adiFile, "");
 }
@@ -94,9 +137,9 @@ while (true) {
                 if ($readSocket === $tcpSocket) {
                     $clientSocket = socket_accept($tcpSocket);
                     $data = socket_read($clientSocket, 1024);
-                    $pattern = '/<command:3>Log <parameters:\d+> /';
-                    $data = preg_replace($pattern, '', $data);
-                    $data = strtoupper($data);
+                    $data = procqso($data);
+                    $data = genadi($data);
+                    $data = $data[0];
                     echo "---------------------------------------------------" . PHP_EOL;
                     echo "Datos TCP: $data" . PHP_EOL;
                     echo "---------------------------------------------------" . PHP_EOL;
@@ -104,7 +147,9 @@ while (true) {
                     socket_close($clientSocket);
                 } elseif ($readSocket === $udpSocket) {
                     socket_recvfrom($udpSocket, $data, 1024, 0, $client_ip, $client_port);
-                    $data = strtoupper($data);
+                    $data = procqso($data);
+                    $data = genadi($data);
+                    $data = $data[0];
                     echo "---------------------------------------------------" . PHP_EOL;
                     echo "Datos UDP: $data" . PHP_EOL;
                     echo "---------------------------------------------------" . PHP_EOL;
@@ -115,26 +160,16 @@ while (true) {
     }
     sleep(1);
     $lineas = file($adiFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-    $lastline = end($lineas);
-    $last_dx = strtoupper($lastline);
+    $last_dx = end($lineas);
     file_put_contents(__DIR__ . '/1.adi', $last_dx, FILE_APPEND);
-    $regex = '/<([A-Z0-9_]+):(\d+)(:[A-Z])?>([^<\s]+)\s*/';
-    preg_match_all($regex, $last_dx, $matches, PREG_SET_ORDER);
-    $qso = [];
-    foreach ($matches as $i => $match) {
-        $field = $match[1];
-        $content = $match[4];
-        $qso[$field] = $content;
+    $last_dx = procqso($last_dx);
+    qsotovar($last_dx[0]);
+    $freq = str_replace('.', '', substr($freq, 0, -3));
+    if ($mode === "MFSK") {
+        $mode = "FT4";
     }
-    $freq = str_replace('.', '', substr($qso["FREQ"], 0, -3));
-    $qso["FREQ"] = $freq;
-    if ($qso['MODE'] === "MFSK") {
-        $qso['MODE'] = "FT4";
-    }
-    foreach ($qso as $key => $value) {
-        $variableName = strtolower($key);
-        $variableName = preg_replace('/[^a-z0-9_]+/', '_', $variableName);
-        $$variableName = $value;
+    if ($mode === "mfsk") {
+        $mode = "ft4";
     }
     $att = "DX $call $freq $mode Send $rst_sent Rcvd $rst_rcvd";
     echo $att . "\n\r";
