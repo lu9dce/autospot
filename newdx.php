@@ -5,14 +5,15 @@ require __DIR__ . '/web/modulos/PHPMailer/src/SMTP.php';
 $adiFile = __DIR__ . '/cluster.adi';
 $dworDir = __DIR__ . '/web/';
 $os = strtoupper(PHP_OS);
-function procqso($data) {
+function procqso($data)
+{
     $data = strtoupper($data);
     $regex = '/<([A-Z0-9_]+):(\d+)(:[A-Z])?>([^<]+)\s*/';
     preg_match_all($regex, $data, $matches, PREG_SET_ORDER);
     $qsos = array();
     $qso = array();
     foreach ($matches as $i => $match) {
-        $field = strtolower($match[1]); 
+        $field = strtolower($match[1]);
         $length = $match[2];
         $type = $match[3];
         $content = $match[4];
@@ -25,7 +26,8 @@ function procqso($data) {
     }
     return $qsos;
 }
-function genadi($qsos) {
+function genadi($qsos)
+{
     $adi_entries = array_map(function ($qso) {
         $adi_entry = '';
         foreach ($qso as $field => $content) {
@@ -38,7 +40,8 @@ function genadi($qsos) {
     }, $qsos);
     return $adi_entries;
 }
-function qsotovar($array) {
+function qsotovar($array)
+{
     $variables = [];
     foreach ($array as $campo => $valor) {
         $valor = rtrim($valor);
@@ -49,7 +52,7 @@ function qsotovar($array) {
     return $variables;
 }
 if (!file_exists($adiFile)) {
-file_put_contents($adiFile, "");
+    file_put_contents($adiFile, "");
 }
 if ($os === 'LINUX') {
     exec("sudo fuser -k -n tcp 80");
@@ -59,7 +62,8 @@ if ($os === 'LINUX') {
     exec("for /f \"tokens=5\" %a in ('netstat -aon ^| findstr :80') do taskkill /f /pid %a");
 }
 date_default_timezone_set('UTC');
-function deco() {
+function deco()
+{
     global $milicencia, $miemail, $minombre, $miqth, $migrid, $dxcomen, $activacluster, $clustertelnet, $clusterport, $activaeqsl, $eqsluser, $eqslpass, $activaaprs, $aprsqth, $aprscode, $activaclublog, $clubuser, $clubmail, $clubpass, $activahrdlog, $hrduser, $hrdcode, $activaargentina, $argenuser, $argenpass, $activaqrz, $qrzuser, $qrzpass, $qrzkey, $activahamqth, $hamuser, $hampass, $activalotw, $activamail, $fondo, $usemail, $useport, $useuser, $usepass, $uportzx, $tportzx, $textqsl;
     $milicencia = base64_decode($milicencia);
     $miemail = base64_decode($miemail);
@@ -111,7 +115,7 @@ if (file_exists(__DIR__ . '/1.adi')) {
 }
 $ip = "0.0.0.0";
 if ($tportzx == null || $tportzx == "") {
-$tportzx = "52001";
+    $tportzx = "52001";
 }
 $tcpPort = $tportzx;
 $tcpSocket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
@@ -119,7 +123,7 @@ socket_bind($tcpSocket, $ip, $tcpPort);
 socket_listen($tcpSocket);
 echo "Esperando conexiones TCP en $ip:$tcpPort..." . PHP_EOL;
 if ($uportzx == null || $uportzx == "") {
-$uportzx = "2223";
+    $uportzx = "2223";
 }
 $udpPort = $uportzx;
 $udpSocket = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
@@ -179,8 +183,8 @@ while (true) {
         include __DIR__ . '/web/modulos/variables.php';
         deco();
         $modules = ['cluster', 'aprs', 'eqsl', 'clublog', 'hrdlog', 'argentina', 'qrz', 'hamqth', 'lotw', 'mail'];
-           foreach ($modules as $module) {
-            if (${'activa'.$module} === "yes") {
+        foreach ($modules as $module) {
+            if (${'activa' . $module} === "yes") {
                 include __DIR__ . "/web/modulos/{$module}.php";
             }
         }

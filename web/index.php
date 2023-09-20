@@ -84,9 +84,9 @@ tr {
 </style>
   <meta http-equiv="refresh" content="60">
 <?php
-    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-    header("Cache-Control: post-check=0, pre-check=0", false);
-    header("Pragma: no-cache");
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
 include __DIR__ . '/modulos/variables.php';
 $milicencia = base64_decode($milicencia);
 $miemail = base64_decode($miemail);
@@ -139,14 +139,16 @@ $textqsl = base64_decode($textqsl);
     </div><br>
 <?php
 
-function calcDist($loc1, $loc2) {
+function calcDist($loc1, $loc2)
+{
     $ll1 = locToLL($loc1);
     $ll2 = locToLL($loc2);
     $dist = calcDistLL($ll1[0], $ll1[1], $ll2[0], $ll2[1]);
     return $dist;
 }
 
-function locToLL($loc) {
+function locToLL($loc)
+{
     $ln = (ord($loc[0]) - 65) * 20 - 180;
     $lt = (ord($loc[1]) - 65) * 10 - 90;
     $ln += intval($loc[2]) * 2;
@@ -154,7 +156,8 @@ function locToLL($loc) {
     return array($lt, $ln);
 }
 
-function calcDistLL($lt1, $ln1, $lt2, $ln2) {
+function calcDistLL($lt1, $ln1, $lt2, $ln2)
+{
     $r = 6371;
     $lt1 = deg2rad($lt1);
     $ln1 = deg2rad($ln1);
@@ -175,10 +178,10 @@ function load_cty_array()
     $handle = fopen($dirt, "r");
     while (($raw_string = fgets($handle)) !== false) {
         $row = str_getcsv($raw_string);
-        $array = explode(' ', $row [9]);
+        $array = explode(' ', $row[9]);
         foreach ($array as &$value) {
             $value = str_replace(';', '', $value);
-            $cty_array [$value] = $row [1];
+            $cty_array[$value] = $row[1];
         }
     }
     fclose($handle);
@@ -189,10 +192,10 @@ function locate($licrx)
 {
     global $cty_array;
     $z = strlen($licrx);
-    for($i = $z; $i >= 1; $i --) {
+    for ($i = $z; $i >= 1; $i--) {
         $licrx = substr($licrx, 0, $i);
-        if (isset($cty_array [$licrx])) {
-            return $cty_array [$licrx];
+        if (isset($cty_array[$licrx])) {
+            return $cty_array[$licrx];
         }
     }
     return "??";
@@ -320,19 +323,19 @@ foreach ($qsos as $i => $qso) {
 }
 echo '<table border="2" align="center" style="width: 500px; font-size: 10px;">';
 echo '<tbody>';
-            echo '<tr align="center"><td style="text-align:center; font-weight: normal; color: white;">Day</td>';
-    for ($diax = 1; $diax <= 31; $diax++) {
-      $diaseros = str_pad($diax, 2, '0', STR_PAD_LEFT);
-      echo "<th style='text-align:center; font-weight: normal; color: white;'>$diaseros</th>";
-  }
-    echo '</tr>';
-    echo '<tr align="center"><td style="text-align:center; font-weight: normal; color: white;">QSOs</td>';
-    for ($diax = 0; $diax <= 30; $diax++) {
+echo '<tr align="center"><td style="text-align:center; font-weight: normal; color: white;">Day</td>';
+for ($diax = 1; $diax <= 31; $diax++) {
+    $diaseros = str_pad($diax, 2, '0', STR_PAD_LEFT);
+    echo "<th style='text-align:center; font-weight: normal; color: white;'>$diaseros</th>";
+}
+echo '</tr>';
+echo '<tr align="center"><td style="text-align:center; font-weight: normal; color: white;">QSOs</td>';
+for ($diax = 0; $diax <= 30; $diax++) {
     $repeticiones = isset($cresu[$diax]) ? $cresu[$diax] : 0;
     echo "<td style='text-align:center; font-weight: normal; color: white;'>$repeticiones</td>";
 }
 echo '</tr>';
-    echo '</table>';
+echo '</table>';
 $n = count($resultados);
 $resultados = array_reverse($resultados);
 $archivo = fopen($archivoLog, 'r');
@@ -360,7 +363,7 @@ echo '<table border="2" align="center" style="width: 600px;">';
 echo '<tr align="center"><th style="text-align:center; font-weight: normal; color: white; width: 10%;">Month</th>';
 $mesesDelAno = array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12');
 foreach ($mesesDelAno as $mes) {
-    echo "<th style='text-align:center; font-weight: normal; color: white; width: 7%;'> $mes</th>"; 
+    echo "<th style='text-align:center; font-weight: normal; color: white; width: 7%;'> $mes</th>";
 }
 echo '</tr>';
 echo '<tr align="center"><td style="text-align:center; font-weight: normal; color: white;">QSOs</td>';
@@ -390,7 +393,7 @@ foreach ($resultados as $i => $resultado) {
     $loc2 = $migrid;
     $loc1 = $resultado['gridsquare'];
     if ($loc1 == "") {
-    $loc1 = $loc2;
+        $loc1 = $loc2;
     }
     $table .= '<tr>';
     $table .= '<td>' . $gg . '</td>';
@@ -406,7 +409,7 @@ foreach ($resultados as $i => $resultado) {
     $table .= '<td>' . locate($resultado['call']) . '</td>';
     $dista = number_format(calcDist($loc1, $loc2), 0, '', '.');
     if ($dista == "0") {
-    $dista = "No Grid";
+        $dista = "No Grid";
     }
     $table .= '<td>' . $dista . '</td>';
     $table .= '</tr>';

@@ -118,6 +118,8 @@
             background-color: red;
             color: white;
             padding: 10px;
+            font-family: mono;
+            font-size: 10px;
             font-weight: bold;
     }
 
@@ -134,11 +136,11 @@
 <pre>
 </center>
 <?php
-    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-    header("Cache-Control: post-check=0, pre-check=0", false);
-    header("Pragma: no-cache");
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
 $archivoVariables = 'variables.php';
-include($archivoVariables);
+include $archivoVariables;
 $milicencia = base64_decode($milicencia);
 $miemail = base64_decode($miemail);
 $minombre = base64_decode($minombre);
@@ -237,53 +239,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $webuser = base64_encode($_POST["webuser"]);
     $webpass = base64_encode($_POST["webpass"]);
     $contenido = '<?php' . PHP_EOL .
-                 '$milicencia = "' . $milicencia . '";' . PHP_EOL .
-                 '$miemail = "' . $miemail . '";' . PHP_EOL .
-                 '$minombre = "' . $minombre . '";' . PHP_EOL .
-                 '$miqth = "' . $miqth . '";' . PHP_EOL .
-                 '$migrid = "' . $migrid . '";' . PHP_EOL .
-                 '$dxcomen = "' . $dxcomen . '";' . PHP_EOL .
-                 '$activacluster = "' . $activacluster . '";' . PHP_EOL .
-                 '$clustertelnet = "' . $clustertelnet . '";' . PHP_EOL .
-                 '$clusterport = "' . $clusterport . '";' . PHP_EOL .
-                 '$activaeqsl = "' . $activaeqsl . '";' . PHP_EOL .
-                 '$eqsluser = "' . $eqsluser . '";' . PHP_EOL .
-                 '$eqslpass = "' . $eqslpass . '";' . PHP_EOL .
-                 '$activaaprs = "' . $activaaprs . '";' . PHP_EOL .
-                 '$aprsqth = "' . $aprsqth . '";' . PHP_EOL .
-                 '$aprscode = "' . $aprscode . '";' . PHP_EOL .
-                 '$activaclublog = "' . $activaclublog . '";' . PHP_EOL .
-                 '$clubuser = "' . $clubuser . '";' . PHP_EOL .
-                 '$clubmail = "' . $clubmail . '";' . PHP_EOL .
-                 '$clubpass = "' . $clubpass . '";' . PHP_EOL .
-                 '$activahrdlog = "' . $activahrdlog . '";' . PHP_EOL .
-                 '$hrduser = "' . $hrduser . '";' . PHP_EOL .
-                 '$hrdcode = "' . $hrdcode . '";' . PHP_EOL .
-                 '$activaargentina = "' . $activaargentina . '";' . PHP_EOL .
-                 '$argenuser = "' . $argenuser . '";' . PHP_EOL .
-                 '$argenpass = "' . $argenpass . '";' . PHP_EOL .
-                 '$activaqrz = "' . $activaqrz . '";' . PHP_EOL .
-                 '$qrzuser = "' . $qrzuser . '";' . PHP_EOL .
-                 '$qrzpass = "' . $qrzpass . '";' . PHP_EOL .
-                 '$qrzkey = "' . $qrzkey . '";' . PHP_EOL .
-                 '$activahamqth = "' . $activahamqth . '";' . PHP_EOL .
-                 '$hamuser = "' . $hamuser . '";' . PHP_EOL .
-                 '$hampass = "' . $hampass . '";' . PHP_EOL .
-                 '$activalotw = "' . $activalotw . '";' . PHP_EOL .
-                 '$activamail = "' . $activamail . '";' . PHP_EOL .
-                 '$fondo = "' . $fondo . '";' . PHP_EOL .
-                 '$usemail = "' . $usemail . '";' . PHP_EOL .
-                 '$useport = "' . $useport . '";' . PHP_EOL .
-                 '$useuser = "' . $useuser . '";' . PHP_EOL .
-                 '$usepass = "' . $usepass . '";' . PHP_EOL .
-                 '$uportzx = "' . $uportzx . '";' . PHP_EOL .
-                 '$tportzx = "' . $tportzx . '";' . PHP_EOL .
-                 '$textqsl = "' . $textqsl . '";' . PHP_EOL .
-                 '$webuser = "' . $webuser . '";' . PHP_EOL .
-                 '$webpass = "' . $webpass . '";' . PHP_EOL .
-                 '?>';
+        '$milicencia = "' . $milicencia . '";' . PHP_EOL .
+        '$miemail = "' . $miemail . '";' . PHP_EOL .
+        '$minombre = "' . $minombre . '";' . PHP_EOL .
+        '$miqth = "' . $miqth . '";' . PHP_EOL .
+        '$migrid = "' . $migrid . '";' . PHP_EOL .
+        '$dxcomen = "' . $dxcomen . '";' . PHP_EOL .
+        '$activacluster = "' . $activacluster . '";' . PHP_EOL .
+        '$clustertelnet = "' . $clustertelnet . '";' . PHP_EOL .
+        '$clusterport = "' . $clusterport . '";' . PHP_EOL .
+        '$activaeqsl = "' . $activaeqsl . '";' . PHP_EOL .
+        '$eqsluser = "' . $eqsluser . '";' . PHP_EOL .
+        '$eqslpass = "' . $eqslpass . '";' . PHP_EOL .
+        '$activaaprs = "' . $activaaprs . '";' . PHP_EOL .
+        '$aprsqth = "' . $aprsqth . '";' . PHP_EOL .
+        '$aprscode = "' . $aprscode . '";' . PHP_EOL .
+        '$activaclublog = "' . $activaclublog . '";' . PHP_EOL .
+        '$clubuser = "' . $clubuser . '";' . PHP_EOL .
+        '$clubmail = "' . $clubmail . '";' . PHP_EOL .
+        '$clubpass = "' . $clubpass . '";' . PHP_EOL .
+        '$activahrdlog = "' . $activahrdlog . '";' . PHP_EOL .
+        '$hrduser = "' . $hrduser . '";' . PHP_EOL .
+        '$hrdcode = "' . $hrdcode . '";' . PHP_EOL .
+        '$activaargentina = "' . $activaargentina . '";' . PHP_EOL .
+        '$argenuser = "' . $argenuser . '";' . PHP_EOL .
+        '$argenpass = "' . $argenpass . '";' . PHP_EOL .
+        '$activaqrz = "' . $activaqrz . '";' . PHP_EOL .
+        '$qrzuser = "' . $qrzuser . '";' . PHP_EOL .
+        '$qrzpass = "' . $qrzpass . '";' . PHP_EOL .
+        '$qrzkey = "' . $qrzkey . '";' . PHP_EOL .
+        '$activahamqth = "' . $activahamqth . '";' . PHP_EOL .
+        '$hamuser = "' . $hamuser . '";' . PHP_EOL .
+        '$hampass = "' . $hampass . '";' . PHP_EOL .
+        '$activalotw = "' . $activalotw . '";' . PHP_EOL .
+        '$activamail = "' . $activamail . '";' . PHP_EOL .
+        '$fondo = "' . $fondo . '";' . PHP_EOL .
+        '$usemail = "' . $usemail . '";' . PHP_EOL .
+        '$useport = "' . $useport . '";' . PHP_EOL .
+        '$useuser = "' . $useuser . '";' . PHP_EOL .
+        '$usepass = "' . $usepass . '";' . PHP_EOL .
+        '$uportzx = "' . $uportzx . '";' . PHP_EOL .
+        '$tportzx = "' . $tportzx . '";' . PHP_EOL .
+        '$textqsl = "' . $textqsl . '";' . PHP_EOL .
+        '$webuser = "' . $webuser . '";' . PHP_EOL .
+        '$webpass = "' . $webpass . '";' . PHP_EOL .
+        '?>';
     file_put_contents($archivoVariables, $contenido);
-    sleep (1);
+    sleep(1);
     header("Location: ../index.php");
     exit;
 }
@@ -296,6 +298,7 @@ Hover the mouse over the form input for assistance<br>
         Warning: When uploading a new ADI,
         use a complete one; this will
         overwrite the current ADI.
+        This process may take time, depending on the file size.
     </div>
     <?php
 session_start();
@@ -305,11 +308,11 @@ session_start();
     <br><input type="file" name="archivo" id="archivo" accept=".adi">
     <br><input type="submit" value="Upload File"><br>
     <?php
-    if (isset($_SESSION['upload_message'])) {
-        echo '<div>' . $_SESSION['upload_message'] . '</div>';
-        unset($_SESSION['upload_message']); // Limpia la variable de sesión después de mostrarla
-    }
-    ?>
+if (isset($_SESSION['upload_message'])) {
+    echo '<div>' . $_SESSION['upload_message'] . '</div>';
+    unset($_SESSION['upload_message']); // Limpia la variable de sesión después de mostrarla
+}
+?>
 </form>
 <form method="post" action="">
 <p>Web access</p>

@@ -1,23 +1,21 @@
 <?php
 /*
-* CREADO POR LU9DCE
-* Copyright 2023 Eduardo Castillo
-* Contacto: castilloeduardo@outlook.com.ar
-* Licencia: Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International
-*/
+ * CREADO POR LU9DCE
+ * Copyright 2023 Eduardo Castillo
+ * Contacto: castilloeduardo@outlook.com.ar
+ * Licencia: Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International
+ */
 $dirt = __DIR__;
-date_default_timezone_set( 'UTC' );
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
+date_default_timezone_set('UTC');
 use PHPMailer\PHPMailer\Exception;
-//include $dirt . '/variables.php';
+use PHPMailer\PHPMailer\PHPMailer;
 include $dirt . '/busq.php';
-$xml = simplexml_load_file( $dirt . '/xusq.xml' );
+$xml = simplexml_load_file($dirt . '/xusq.xml');
 $malmail = $xml->search->email;
 $malname = $xml->search->nick;
-if ( !empty( $malmail ) ) {
-    $dosPrimerasLetras = strtoupper( substr( $call, 0, 2 ) );
-    $combinacionesPermitidas = array( 'EA', 'XE', 'LU', 'LW', 'CE', 'CA', 'CB', 'HK', 'YV', 'YW', '4M', 'CO', 'CL', 'CM', 'OA', 'OB', 'OC', 'HC', 'CP', 'CB', 'CD', 'CX', 'TG', 'HR', 'YS', 'YN', 'TI', 'HP', 'HI', 'KP4', 'NP3', 'NP4' );
+if (!empty($malmail)) {
+    $dosPrimerasLetras = strtoupper(substr($call, 0, 2));
+    $combinacionesPermitidas = array('EA', 'XE', 'LU', 'LW', 'CE', 'CA', 'CB', 'HK', 'YV', 'YW', '4M', 'CO', 'CL', 'CM', 'OA', 'OB', 'OC', 'HC', 'CP', 'CB', 'CD', 'CX', 'TG', 'HR', 'YS', 'YN', 'TI', 'HP', 'HI', 'KP4', 'NP3', 'NP4');
     include $dirt . '/qsl.php';
     $cuerpo = "<br>
 ---------------------------------------------------------------------<br>
@@ -43,14 +41,14 @@ My QRZ https://www.qrz.com/db/$milicencia<br>
                    Software  Auto-Spot - by Eduardo Castillo (LU9DCE)<br>
 <br>";
     $zxz = 'Hi! ' . $call . ' -  Thanks for the qso';
-    if ( in_array( $dosPrimerasLetras, $combinacionesPermitidas ) ) {
-        $cuerpo = str_replace( 'Dear', 'Estimado', $cuerpo );
-        $cuerpo = str_replace( 'Thank you for our contact', 'Gracias por el contacto', $cuerpo );
-        $cuerpo = str_replace( 'Please find attached my QSL card', 'Por favor, encuentre adjunta mi tarjeta QSL', $cuerpo );
-        $cuerpo = str_replace( 'Best Regards and 73', 'Saludos cordiales y 73', $cuerpo );
+    if (in_array($dosPrimerasLetras, $combinacionesPermitidas)) {
+        $cuerpo = str_replace('Dear', 'Estimado', $cuerpo);
+        $cuerpo = str_replace('Thank you for our contact', 'Gracias por el contacto', $cuerpo);
+        $cuerpo = str_replace('Please find attached my QSL card', 'Por favor, encuentre adjunta mi tarjeta QSL', $cuerpo);
+        $cuerpo = str_replace('Best Regards and 73', 'Saludos cordiales y 73', $cuerpo);
         $zxz = 'Hola! ' . $call . ' - Gracias por el qso';
     }
-    $mail = new PHPMailer( true );
+    $mail = new PHPMailer(true);
     try {
         $mail->SMTPDebug = 0;
         $mail->isSMTP();
@@ -61,16 +59,16 @@ My QRZ https://www.qrz.com/db/$milicencia<br>
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $mail->SMTPSecure = 'tls';
         $mail->Port = $useport;
-        $mail->setFrom( $useuser, $milicencia );
-        $mail->addAddress( $malmail );
-        $mail->addAttachment( $dirt . '/qsl.jpg' );
-        $mail->isHTML( true );
+        $mail->setFrom($useuser, $milicencia);
+        $mail->addAddress($malmail);
+        $mail->addAttachment($dirt . '/qsl.jpg');
+        $mail->isHTML(true);
         $mail->Subject = $zxz;
         $mail->Body = $cuerpo;
         $mail->send();
         $result = '1';
         echo "Enviado mail a $malmail\n\r";
-    } catch ( Exception $e ) {
+    } catch (Exception $e) {
         $result = '0';
     }
 } else {
@@ -78,10 +76,9 @@ My QRZ https://www.qrz.com/db/$milicencia<br>
     echo "Mail no encontrado\n\r";
 }
 
-if ( file_exists( $dirt . '/xusq.xml' ) ) {
-    unlink( $dirt . '/xusq.xml' );
+if (file_exists($dirt . '/xusq.xml')) {
+    unlink($dirt . '/xusq.xml');
 }
-if ( file_exists( $dirt . '/qsl.jpg' ) ) {
-    unlink( $dirt . '/qsl.jpg' );
+if (file_exists($dirt . '/qsl.jpg')) {
+    unlink($dirt . '/qsl.jpg');
 }
-?>
