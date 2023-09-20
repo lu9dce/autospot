@@ -313,7 +313,8 @@ if (isset($_SESSION['upload_message'])) {
     unset($_SESSION['upload_message']); // Limpia la variable de sesión después de mostrarla
 }
 ?>
-</form>
+    <a href="descargar.php" class="descargar-link">Download ADI</a>
+<p></p>
 <form method="post" action="">
 <p>Web access</p>
 <label for="webuser">User:</label>
