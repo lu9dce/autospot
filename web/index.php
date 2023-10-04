@@ -403,9 +403,6 @@ foreach ($resultados as $i => $resultado) {
     $gg = $n - $i;
     $loc2 = $migrid;
     $loc1 = $resultado['gridsquare'];
-    if ($loc1 == "") {
-        $loc1 = $loc2;
-    }
     $table .= '<tr>';
     $table .= '<td>' . $gg . '</td>';
     $table .= '<td>' . $resultado['call'] . '</td>';
@@ -418,9 +415,10 @@ foreach ($resultados as $i => $resultado) {
     $table .= '<td>' . $resultado['band'] . '</td>';
     $table .= '<td>' . $resultado['freq'] . '</td>';
     $table .= '<td>' . locate($resultado['call']) . '</td>';
-    $dista = number_format(calcDist($loc1, $loc2), 0, '', '.');
-    if ($dista == "0") {
+    if ($loc1 == "") {
         $dista = "No Grid";
+    } else {
+        $dista = number_format(calcDist($loc1, $loc2), 0, '', '.');
     }
     $table .= '<td>' . $dista . '</td>';
     $table .= '</tr>';
