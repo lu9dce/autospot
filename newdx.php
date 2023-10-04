@@ -58,8 +58,6 @@ if ($os === 'LINUX') {
     exec("sudo fuser -k -n tcp 80");
     $command = 'sudo sh -c "php -S 0.0.0.0:80 -t web/ > /dev/null 2>&1 &"';
     exec($command);
-} else {
-    exec("for /f \"tokens=5\" %a in ('netstat -aon ^| findstr :80') do taskkill /f /pid %a");
 }
 date_default_timezone_set('UTC');
 function deco()
