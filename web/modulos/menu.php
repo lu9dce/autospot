@@ -293,29 +293,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div id="content">
 <h2>Settings</h2>
 Hover the mouse over the form input for assistance<br>
-<p>Upload new adi</p>
-<div class="red-div">
-        Warning: When uploading a new ADI,
-        use a complete one; this will
-        overwrite the current ADI.
-        This process may take time, depending on the file size.
-    </div>
-    <?php
-session_start();
-?>
-    <form class="excluir" action="upadi.php" method="POST" enctype="multipart/form-data">
-    <br><label for="archivo"></label>
-    <br><input type="file" name="archivo" id="archivo" accept=".adi">
-    <br><input type="submit" value="Upload File"><br>
-    <?php
-if (isset($_SESSION['upload_message'])) {
-    echo '<div>' . $_SESSION['upload_message'] . '</div>';
-    unset($_SESSION['upload_message']); // Limpia la variable de sesión después de mostrarla
-}
-?>
-    <a href="descargar.php" class="descargar-link">Download ADI</a>
 <p></p>
-<form method="post" action="">
+<h2>Adi</h2>
+    <a href="xadi.php">Upload</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="descargar.php">Download</a>
+<p></p>
+<form  method="post" action="">
 <p>Web access</p>
 <label for="webuser">User:</label>
 <input type="text" name="webuser" value="<?php echo $webuser; ?>" title="Enter your username"><br>

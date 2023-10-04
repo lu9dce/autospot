@@ -53,6 +53,7 @@ function qsotovar($array)
     return $variables;
 }
 $dirtx = dirname(dirname(__DIR__));
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($_FILES["archivo"]["error"] == UPLOAD_ERR_OK) {
         $nombre_temporal = $_FILES["archivo"]["tmp_name"];
