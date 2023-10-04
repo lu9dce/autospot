@@ -176,7 +176,11 @@ while (true) {
     $att = "DX $call $freq $mode Send $rst_sent Rcvd $rst_rcvd";
     echo $att . "\n\r";
     echo "---------------------------------------------------" . PHP_EOL;
+    if ($os === 'LINUX') {
     $pingresult = exec("ping -4 -n -c 1 8.8.8.8", $outcome, $status);
+    } else {
+    $pingresult = exec("ping -4 -n 1 8.8.8.8", $outcome, $status);
+    }
     if ($status == 0) {
         include __DIR__ . '/web/modulos/variables.php';
         deco();
