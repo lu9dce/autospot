@@ -28,6 +28,9 @@ For example, to run it in the background, you can use:
 ```bash
 tmux new-session -d -s cluster 'cd /root/cluster && php -d opcache.enable_cli=1 -d opcache.jit_buffer_size=64M -d opcache.jit=1255 -d memory_limit=-1 newdx.php && tmux detach-client'
 ```
+**Use run_autospot.bat** for Windows
+
+**Use run_autospot.sh** for linux
 
 These commands will help you run your PHP script with optimizations either in the foreground or in the background using tmux.
 
