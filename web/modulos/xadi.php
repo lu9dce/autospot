@@ -131,6 +131,9 @@
 
 <body>
     <center>
+    <br>
+    <a href="../../index.php"><button>Exit</button></a> <a href="menu.php"><button>Menu</button></a>
+    <br><br>
     <div id="content">
     <h2>Adi</h2>
 <div class="red-div">

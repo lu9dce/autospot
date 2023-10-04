@@ -135,10 +135,21 @@ $textqsl = base64_decode($textqsl);
 <body>
     <div style="text-align: center;">
     <h1 class="tper">Auto-Spot - <?php echo $milicencia; ?></h1>
+    <?php
+$githubFileUrl = 'https://raw.githubusercontent.com/lu9dce/autospot/main/newdx.php';
+$localFilePath = dirname(__DIR__) . '/newdx.php';
+$githubFileContent = file_get_contents($githubFileUrl);
+$localFileContent = file_get_contents($localFilePath);
+if ($githubFileContent === $localFileContent) {
+    echo "<center>AutoSpot is up to date<br><br></center>";
+} else {
+    echo "<center>Attention: Update AutoSpot<br><br></center>";
+}
+?>
     <button onclick="location.href='modulos/menu.php'">Menu</button><br>
     </div><br>
-<?php
 
+<?php
 function calcDist($loc1, $loc2)
 {
     $ll1 = locToLL($loc1);
