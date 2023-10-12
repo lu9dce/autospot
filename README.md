@@ -10,6 +10,8 @@
 
 **I recommend ULTRON:** https://github.com/lu9dce/ultron
 
+**EASY FOR WIN DOWNLOAD** : 📥 [AUTO-SPOT (WIN)](https://drive.google.com/drive/folders/1JYWeMY5giVzscMdtq1dMDu2BknGj-CeX?usp=sharing)
+
 **DOWNLOAD** : 📥 [AUTO-SPOT (Main Branch)](https://github.com/lu9dce/autospot/archive/refs/heads/main.zip)
 
 <br><img src="https://pbs.twimg.com/media/F5QS6tEXEAA9WhI?format=png&name=small" width="350" height="240">
