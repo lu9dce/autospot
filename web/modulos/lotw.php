@@ -13,6 +13,7 @@ $possible_dirs = array(
     '/bin/tqsl',
     '/usr/local/bin/tqsl',
     '/opt/tqsl/bin/tqsl',
+    'C:\Program Files (x86)\TrustedQSL\tqsl.exe',
 );
 $tqsl_location = '';
 foreach ($possible_dirs as $dir) {
@@ -21,10 +22,16 @@ foreach ($possible_dirs as $dir) {
         break;
     }
 }
+$command = '';
 if (!empty($tqsl_location)) {
-    $command = 'export DISPLAY=:1 && ' . $tqsl_location . ' -c ' . $milicencia . ' -l ' . $milicencia . ' -q -d -u ' . $cf . ' -a all > /dev/null 2>&1 &';
+    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+        $command = '"' . $tqsl_location . '" -c ' . $milicencia . ' -l ' . $milicencia . ' -q -d -u ' . $cf . ' -a all';
+    } else {
+        $command = 'export DISPLAY=:1 && ' . $tqsl_location . ' -c ' . $milicencia . ' -l ' . $milicencia . ' -q -d -u ' . $cf . ' -a all > /dev/null 2>&1 &';
+    }
     $output = shell_exec($command);
     echo "Enviando lotw\n\r";
 } else {
     echo "Error tqsl no found\n\r";
 }
+
