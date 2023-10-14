@@ -34,4 +34,3 @@ if (!empty($tqsl_location)) {
 } else {
     echo "Error tqsl no found\n\r";
 }
-
