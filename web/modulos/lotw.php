@@ -27,10 +27,27 @@ if (!empty($tqsl_location)) {
     if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
         $command = '"' . $tqsl_location . '" -c ' . $milicencia . ' -l ' . $milicencia . ' -q -d -u ' . $cf . ' -a all';
     } else {
-        $command = 'export DISPLAY=:1 && ' . $tqsl_location . ' -c ' . $milicencia . ' -l ' . $milicencia . ' -q -d -u ' . $cf . ' -a all > /dev/null 2>&1 &';
+        // Ejecutar 'who' para obtener la información de la sesión actual
+        $who_output = shell_exec('who');
+        $lines = explode("\n", $who_output);
+        
+        foreach ($lines as $line) {
+            if (strpos($line, '(:') !== false) {
+                // Encontrar la línea que contiene el valor de DISPLAY
+                $display = explode('(:', $line)[1];
+                $display = substr($display, 0, strpos($display, ')'));
+                break;
+            }
+        }
+
+        if (isset($display)) {
+            $command = "DISPLAY=:{$display} {$tqsl_location} -c {$milicencia} -l {$milicencia} -q -d -u {$cf} -a all";
+        } else {
+            echo "No se pudo encontrar el valor de DISPLAY en la salida de 'who'.";
+        }
     }
     $output = shell_exec($command);
     echo "Enviando lotw\n\r";
 } else {
-    echo "Error tqsl no found\n\r";
+    echo "Error tqsl no encontrado\n\r";
 }
