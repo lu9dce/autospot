@@ -41,12 +41,15 @@ if (!empty($tqsl_location)) {
         }
 
         if (isset($display)) {
-            $command = "DISPLAY=:{$display} {$tqsl_location} -c {$milicencia} -l {$milicencia} -q -d -u {$cf} -a all";
+            //$command = "DISPLAY=:{$display} {$tqsl_location} -c {$milicencia} -l {$milicencia} -q -d -u {$cf} -a all";
+            $command = "DISPLAY=:{$display} {$tqsl_location} -c {$milicencia} -l {$milicencia} -q -d -u {$cf} -a all > /dev/null 2>&1 &";
         } else {
             echo "No se pudo encontrar el valor de DISPLAY en la salida de 'who'.";
         }
     }
+    //echo "================================================================\n\r";
     $output = shell_exec($command);
+    //echo "================================================================\n\r";
     echo "Enviando lotw\n\r";
 } else {
     echo "Error tqsl no encontrado\n\r";

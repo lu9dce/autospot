@@ -67,7 +67,7 @@ My QRZ https://www.qrz.com/db/$milicencia<br>
         $mail->Body = $cuerpo;
         $mail->send();
         $result = '1';
-        echo "Enviado mail a $malmail\n\r";
+        echo "Enviando mail a $malmail\n\r";
     } catch (Exception $e) {
         $result = '0';
     }
