@@ -8,7 +8,6 @@
     @font-face {
         font-family: mono;
     }
-
     body {
         font-family: sans;
         font-size: 14px;
@@ -17,13 +16,11 @@
         align-items: center;
         height: 100vh;
     }
-
     p {
         color: green;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         border-bottom: 2px solid blue;
     }
-
     #content {
         width: 500px;
         text-align: center;
@@ -34,7 +31,6 @@
         border-radius: 8px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.9);
     }
-
     @media (max-width: 800px) {
         body {
             padding: 20px;
@@ -44,11 +40,9 @@
             width: auto;
         }
     }
-
     form {
         margin-top: 20px;
     }
-
     label {
         font-family: mono;
         font-size: 12px;
@@ -56,7 +50,6 @@
         width: 20%;
         padding: 5px 0;
     }
-
     input[type=text],
     input[type=password],
     select {
@@ -70,7 +63,6 @@
         border-radius: 4px;
         box-sizing: border-box;
     }
-
     input[type=submit] {
         font-family: mono;
         font-size: 18px;
@@ -83,24 +75,20 @@
         border-radius: 4px;
         cursor: pointer;
     }
-
     input[type=submit]:hover {
         font-family: mono;
         font-size: 18px;
         background-color: rgb(255, 40, 40);
     }
-
     h2 {
         font-family: mono;
         font-size: 18px;
         background-color: rgb(0, 20, 255);
         color: rgb(255, 255, 255);
     }
-
     label {
         text-align: left;
     }
-
     button {
         font-weight: bold;
         display: inline-block;
@@ -113,7 +101,6 @@
         background-image: linear-gradient(#00AA00, #101010);
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
     }
-
     .red-div {
             background-color: red;
             color: white;
@@ -122,13 +109,11 @@
             font-size: 10px;
             font-weight: bold;
     }
-
     .excluir {
         margin-top: -20px;
 }
     </style>
 </head>
-
 <body>
     <center>
         <pre>
@@ -185,6 +170,10 @@ $tportzx = base64_decode($tportzx);
 $textqsl = base64_decode($textqsl);
 $webuser = base64_decode($webuser);
 $webpass = base64_decode($webpass);
+$activacloudlog = base64_decode($activacloudlog);
+$cloudlogurl = base64_decode($cloudlogurl);
+$cloudlogapi = base64_decode($cloudlogapi);
+$cloudlogid = base64_decode($cloudlogid);
 $valid_username = $webuser;
 $valid_password = $webpass;
 if (!isset($_SERVER['PHP_AUTH_USER']) || $_SERVER['PHP_AUTH_USER'] != $valid_username || $_SERVER['PHP_AUTH_PW'] != $valid_password) {
@@ -238,6 +227,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $textqsl = base64_encode($_POST["textqsl"]);
     $webuser = base64_encode($_POST["webuser"]);
     $webpass = base64_encode($_POST["webpass"]);
+    $activacloudlog = base64_encode($_POST["activacloudlog"]);
+    $cloudlogurl = base64_encode($_POST["cloudlogurl"]);
+    $cloudlogapi = base64_encode($_POST["cloudlogapi"]);
+    $cloudlogid = base64_encode($_POST["cloudlogid"]);
     $contenido = '<?php' . PHP_EOL .
         '$milicencia = "' . $milicencia . '";' . PHP_EOL .
         '$miemail = "' . $miemail . '";' . PHP_EOL .
@@ -283,6 +276,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         '$textqsl = "' . $textqsl . '";' . PHP_EOL .
         '$webuser = "' . $webuser . '";' . PHP_EOL .
         '$webpass = "' . $webpass . '";' . PHP_EOL .
+        '$activacloudlog = "' . $activacloudlog . '";' . PHP_EOL .
+        '$cloudlogurl = "' . $cloudlogurl . '";' . PHP_EOL .
+        '$cloudlogapi = "' . $cloudlogapi . '";' . PHP_EOL .
+        '$cloudlogid = "' . $cloudlogid . '";' . PHP_EOL .
         '?>';
     file_put_contents($archivoVariables, $contenido);
     sleep(1);
@@ -365,6 +362,15 @@ Hover the mouse over the form input for assistance<br>
 <input type="text" name="argenuser" value="<?php echo $argenuser; ?>" title="Enter your Log Argentina username"><br>
 <label for="argenpass">Password:</label>
 <input type="password" name="argenpass" value="<?php echo $argenpass; ?>" title="Enter your Log Argentina password"><br>
+<p>Cloudlog</p>
+<label for="activacloudlog">Activate:</label>
+<input type="text" name="activacloudlog" value="<?php echo $activacloudlog; ?>" title="Enter 'yes' to activate cloudlog, 'no' to deactivate"><br>
+<label for="cloudlogurl">Url:</label>
+<input type="text" name="cloudlogurl" value="<?php echo $cloudlogurl; ?>" title="Enter url of cloudlog"><br>
+<label for="cloudlogapi">API:</label>
+<input type="password" name="cloudlogapi" value="<?php echo $cloudlogapi; ?>" title="Enter api of cloudlog"><br>
+<label for="cloudlogid">ID:</label>
+<input type="text" name="cloudlogid" value="<?php echo $cloudlogid; ?>" title="Enter ID of cloudlog"><br>
 <p>QRZ data</p>
 <label for="activaqrz">Activate:</label>
 <input type="text" name="activaqrz" value="<?php echo $activaqrz; ?>" title="Enter 'yes' to activate QRZ, 'no' to deactivate"><br>

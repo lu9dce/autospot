@@ -62,7 +62,7 @@ if ($os === 'LINUX') {
 date_default_timezone_set('UTC');
 function deco()
 {
-    global $milicencia, $miemail, $minombre, $miqth, $migrid, $dxcomen, $activacluster, $clustertelnet, $clusterport, $activaeqsl, $eqsluser, $eqslpass, $activaaprs, $aprsqth, $aprscode, $activaclublog, $clubuser, $clubmail, $clubpass, $activahrdlog, $hrduser, $hrdcode, $activaargentina, $argenuser, $argenpass, $activaqrz, $qrzuser, $qrzpass, $qrzkey, $activahamqth, $hamuser, $hampass, $activalotw, $activamail, $fondo, $usemail, $useport, $useuser, $usepass, $uportzx, $tportzx, $textqsl;
+    global $milicencia, $miemail, $minombre, $miqth, $migrid, $dxcomen, $activacluster, $clustertelnet, $clusterport, $activaeqsl, $eqsluser, $eqslpass, $activaaprs, $aprsqth, $aprscode, $activaclublog, $clubuser, $clubmail, $clubpass, $activahrdlog, $hrduser, $hrdcode, $activaargentina, $argenuser, $argenpass, $activaqrz, $qrzuser, $qrzpass, $qrzkey, $activahamqth, $hamuser, $hampass, $activalotw, $activamail, $fondo, $usemail, $useport, $useuser, $usepass, $uportzx, $tportzx, $textqsl, $webusr, $webpass, $activacloudlog, $cloudlogurl, $cloudlogapi, $cloudlogid;
     $milicencia = base64_decode($milicencia);
     $miemail = base64_decode($miemail);
     $minombre = base64_decode($minombre);
@@ -105,6 +105,12 @@ function deco()
     $uportzx = base64_decode($uportzx);
     $tportzx = base64_decode($tportzx);
     $textqsl = base64_decode($textqsl);
+    $webuser = base64_decode($webusr);
+    $webpass = base64_decode($webpass);
+    $activacloudlog = base64_decode($activacloudlog);
+    $cloudlogurl = base64_decode($cloudlogurl);
+    $cloudlogapi = base64_decode($cloudlogapi);
+    $cloudlogid = base64_decode($cloudlogid);
 }
 include __DIR__ . '/web/modulos/variables.php';
 deco();
@@ -184,7 +190,7 @@ while (true) {
     if ($status == 0) {
         include __DIR__ . '/web/modulos/variables.php';
         deco();
-        $modules = ['cluster', 'aprs', 'eqsl', 'clublog', 'hrdlog', 'argentina', 'qrz', 'hamqth', 'lotw', 'mail'];
+        $modules = ['cluster', 'aprs', 'eqsl', 'clublog', 'hrdlog', 'argentina', 'qrz', 'hamqth', 'cloudlog', 'lotw', 'mail'];
         foreach ($modules as $module) {
             if (${'activa' . $module} === "yes") {
                 include __DIR__ . "/web/modulos/{$module}.php";
@@ -200,4 +206,4 @@ while (true) {
     }
 }
 
-//update : 02
+//update : 03
