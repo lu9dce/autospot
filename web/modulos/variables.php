@@ -43,4 +43,8 @@ $tportzx = "";
 $textqsl = "";
 $webuser = "";
 $webpass = "";
+$activacloudlog = "";
+$cloudlogurl = "";
+$cloudlogapi = "";
+$cloudlogid = "";
 ?>
