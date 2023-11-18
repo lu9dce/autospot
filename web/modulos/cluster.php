@@ -7,16 +7,19 @@
  */
 $apap = "";
 $at = "DX $call $freq $mode Send $rst_sent Rcvd $rst_rcvd";
+
+$context = stream_context_create();
 $da = fsockopen($clustertelnet, $clusterport, $errno, $errstr, 10);
 if ($da) {
     fwrite($da, "$station_callsign\r\n");
     sleep(1);
-    fwrite($da, "$at\r\n");
-    sleep(1);
-    for ($a = 0; $a < 10; $a++) {
+    while (strpos($apap, '>') === false) {
         $apap .= fgets($da);
     }
     sleep(1);
+    fwrite($da, "$at\r\n");
+    sleep(1);
+    $apap .= fgets($da);
     fwrite($da, "b\r\n");
     sleep(1);
     fclose($da);
