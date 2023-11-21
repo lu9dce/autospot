@@ -212,6 +212,18 @@ function locate($licrx)
     return "??";
 }
 
+function bflag($nombre) {
+    $nombre = strtoupper(trim($nombre));
+    $jsonString = file_get_contents('flag/dxcc.json');
+    $data = json_decode($jsonString, true);
+    foreach ($data as $entry) {
+        if ($entry['name'] == $nombre) {
+            return $entry['flag'];
+        }
+    }
+    return false;
+}
+
 $fechaActual = date('Ym');
 $archivoLog = dirname(__DIR__) . "/cluster.adi";
 $logContenido = file_get_contents($archivoLog);
@@ -396,6 +408,7 @@ $table .= '<th>Date</th>';
 $table .= '<th>Time</th>';
 $table .= '<th>Band</th>';
 $table .= '<th>Freq</th>';
+$table .= '<th>Flag</th>';
 $table .= '<th>Country</th>';
 $table .= '<th>Dist Km</th>';
 $table .= '</tr>';
@@ -403,6 +416,8 @@ foreach ($resultados as $i => $resultado) {
     $gg = $n - $i;
     $loc2 = $migrid;
     $loc1 = $resultado['gridsquare'];
+    $qwe = locate($resultado['call']);
+    $qwr = bflag($qwe);
     $table .= '<tr>';
     $table .= '<td>' . $gg . '</td>';
     $table .= '<td>' . $resultado['call'] . '</td>';
@@ -414,7 +429,8 @@ foreach ($resultados as $i => $resultado) {
     $table .= '<td>' . $resultado['time_on'] . '</td>';
     $table .= '<td>' . $resultado['band'] . '</td>';
     $table .= '<td>' . $resultado['freq'] . '</td>';
-    $table .= '<td>' . locate($resultado['call']) . '</td>';
+    $table .= '<td> <img src="flag/' . $qwr . '.png"></td>';
+    $table .= '<td>' . $qwe . '</td>';
     if ($loc1 == "") {
         $dista = "No Grid";
     } else {
