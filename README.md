@@ -20,7 +20,7 @@ I have tested this program on Slackware 15.0, and other colleagues have tested i
 
 I do not guarantee its functionality if the user lacks knowledge."
 
-<img src="https://raw.githubusercontent.com/lu9dce/lu9dce.github.io/main/img/autospot.png" width="300" height="300">
+<img src="https://raw.githubusercontent.com/lu9dce/lu9dce.github.io/main/img/autospot.png" width="400" height="300">
 <hr>
 
 Auto-Spot is your one-stop solution for online amateur radio logging. It's more than just a program; it's your gateway to seamless radio communication and a hassle-free QSO experience!
