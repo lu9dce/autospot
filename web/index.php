@@ -182,47 +182,57 @@ function calcDistLL($lt1, $ln1, $lt2, $ln2)
     return $dist;
 }
 
-function load_cty_array()
-{
-    $cty_array = array();
-    $dirt = __DIR__ . '/cty.csv';
-    $handle = fopen($dirt, "r");
-    while (($raw_string = fgets($handle)) !== false) {
-        $row = str_getcsv($raw_string);
-        $array = explode(' ', $row[9]);
-        foreach ($array as &$value) {
-            $value = str_replace(';', '', $value);
-            $cty_array[$value] = $row[1];
-        }
-    }
-    fclose($handle);
-    return $cty_array;
-}
-$cty_array = load_cty_array();
 function locate($licrx)
 {
-    global $cty_array;
+    $licrx = strtoupper($licrx);
+    $cty_array = array();
+    $dirt = __DIR__ . '/cty.csv';
+    $bflag_data = json_decode(file_get_contents('flag/dxcc.json'), true);
+
+    if (($handle = fopen($dirt, "r")) !== false) {
+        while (($raw_string = fgets($handle)) !== false) {
+            $row = str_getcsv($raw_string);
+            $array = explode(' ', $row[9]);
+            $array = array_map(function ($value) {
+                return str_replace(';', '', $value);
+            }, $array);
+            $cty_array += array_fill_keys($array, $row[2]);
+        }
+        fclose($handle);
+    }
+
     $z = strlen($licrx);
     for ($i = $z; $i >= 1; $i--) {
-        $licrx = substr($licrx, 0, $i);
-        if (isset($cty_array[$licrx])) {
-            return $cty_array[$licrx];
+        $licrx_part = substr($licrx, 0, $i);
+
+        if (isset($cty_array[$licrx_part])) {
+            $country_code = $cty_array[$licrx_part];
+            $flag = false;
+            $country_name = '';
+
+            foreach ($bflag_data as $entry) {
+                if ($entry['id'] == $country_code) {
+                    $flag = $entry['flag'];
+                    $country_name = $entry['name'];
+                    break;
+                }
+            }
+
+            return [
+                'id' => $country_code,
+                'flag' => $flag,
+                'country_name' => $country_name,
+            ];
         }
     }
-    return "??";
+
+    return [
+        'id' => 'unknown',
+        'flag' => 'unknown',
+        'country_name' => 'unknown',
+    ];
 }
 
-function bflag($nombre) {
-    $nombre = strtoupper(trim($nombre));
-    $jsonString = file_get_contents('flag/dxcc.json');
-    $data = json_decode($jsonString, true);
-    foreach ($data as $entry) {
-        if ($entry['name'] == $nombre) {
-            return $entry['flag'];
-        }
-    }
-    return false;
-}
 
 $fechaActual = date('Ym');
 $archivoLog = dirname(__DIR__) . "/cluster.adi";
@@ -416,8 +426,7 @@ foreach ($resultados as $i => $resultado) {
     $gg = $n - $i;
     $loc2 = $migrid;
     $loc1 = $resultado['gridsquare'];
-    $qwe = locate($resultado['call']);
-    $qwr = bflag($qwe);
+    $result = locate($resultado['call']);
     $table .= '<tr>';
     $table .= '<td>' . $gg . '</td>';
     $table .= '<td>' . $resultado['call'] . '</td>';
@@ -429,8 +438,8 @@ foreach ($resultados as $i => $resultado) {
     $table .= '<td>' . $resultado['time_on'] . '</td>';
     $table .= '<td>' . $resultado['band'] . '</td>';
     $table .= '<td>' . $resultado['freq'] . '</td>';
-    $table .= '<td> <img src="flag/' . $qwr . '.png"></td>';
-    $table .= '<td>' . $qwe . '</td>';
+    $table .= '<td> <img src="flag/' . $result['flag'] . '.png"></td>';
+    $table .= '<td>' . $result['country_name'] . '</td>';
     if ($loc1 == "") {
         $dista = "No Grid";
     } else {
