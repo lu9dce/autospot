@@ -160,10 +160,10 @@ function calcDist($loc1, $loc2)
 
 function locToLL($loc)
 {
-    $ln = (ord($loc[0]) - 65) * 20 - 180;
-    $lt = (ord($loc[1]) - 65) * 10 - 90;
-    $ln += intval($loc[2]) * 2;
-    $lt += intval($loc[3]) * 1;
+    $ln = (ord(@$loc[0]) - 65) * 20 - 180;
+    $lt = (ord(@$loc[1]) - 65) * 10 - 90;
+    $ln += intval(@$loc[2]) * 2;
+    $lt += intval(@$loc[3]) * 1;
     return array($lt, $ln);
 }
 
@@ -326,7 +326,7 @@ foreach ($lineasArchivo as $linea) {
 $fecha_actual = date('Ymd');
 $resultados = array();
 foreach ($qsos as $i => $qso) {
-    $qso_date = $qso['QSO_DATE'];
+    $qso_date = @$qso['QSO_DATE'];
     if ($qso_date !== $fecha_actual) {
         continue;
     }
