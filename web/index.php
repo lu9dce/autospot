@@ -84,6 +84,12 @@ tr {
 </style>
   <meta http-equiv="refresh" content="60">
 <?php
+
+// PREPARA TODO PARA LEER LAS VARIABLES DEL USUARIO
+
+$resultados_json = file_get_contents('resultados.json');
+$base = json_decode($resultados_json, true);
+
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
@@ -131,11 +137,16 @@ $uportzx = base64_decode($uportzx);
 $tportzx = base64_decode($tportzx);
 $textqsl = base64_decode($textqsl);
 ?>
+
 </head>
 <body>
     <div style="text-align: center;">
     <h1 class="tper">Auto-Spot - <?php echo $milicencia; ?></h1>
-    <?php
+
+<?php
+
+// VERIFICA SI HAY VERSION NUEVA
+
 $githubFileUrl = 'https://raw.githubusercontent.com/lu9dce/autospot/main/newdx.php';
 $localFilePath = dirname(__DIR__) . '/newdx.php';
 $githubFileContent = file_get_contents($githubFileUrl);
@@ -146,10 +157,14 @@ if ($githubFileContent === $localFileContent) {
     echo "<center>Attention: Update AutoSpot<br><br></center>";
 }
 ?>
+
     <button onclick="location.href='modulos/menu.php'">Menu</button><br>
     </div><br>
 
 <?php
+
+// FUNSIONES
+
 function calcDist($loc1, $loc2)
 {
     $ll1 = locToLL($loc1);
@@ -184,78 +199,114 @@ function calcDistLL($lt1, $ln1, $lt2, $ln2)
 
 function locate($licrx)
 {
-    $licrx = strtoupper($licrx);
-    $cty_array = array();
-    $dirt = __DIR__ . '/cty.csv';
-    $bflag_data = json_decode(file_get_contents('flag/dxcc.json'), true);
+    // Acceder a la variable global que contiene la información de la base de datos
+    global $base;
 
-    if (($handle = fopen($dirt, "r")) !== false) {
-        while (($raw_string = fgets($handle)) !== false) {
-            $row = str_getcsv($raw_string);
-            $array = explode(' ', $row[9]);
-            $array = array_map(function ($value) {
-                return str_replace(';', '', $value);
-            }, $array);
-            $cty_array += array_fill_keys($array, $row[2]);
-        }
-        fclose($handle);
-    }
-
+    // Obtener la longitud de la licencia proporcionada
     $z = strlen($licrx);
+
+    // Iterar a través de las posibles longitudes de licencia recortada
     for ($i = $z; $i >= 1; $i--) {
-        $licrx_part = substr($licrx, 0, $i);
+        // Obtener la parte recortada de la licencia
+        $licencia_recortada = substr($licrx, 0, $i);
 
-        if (isset($cty_array[$licrx_part])) {
-            $country_code = $cty_array[$licrx_part];
-            $flag = false;
-            $country_name = '';
+        // Iterar a través de la base de datos para encontrar coincidencias
+        foreach ($base as $resultado) {
+            // Crear una expresión regular para buscar la licencia recortada
+            $expresion_regular = '/\b ' . $licencia_recortada . ' \b/';
 
-            foreach ($bflag_data as $entry) {
-                if ($entry['id'] == $country_code) {
-                    $flag = $entry['flag'];
-                    $country_name = $entry['name'];
-                    break;
-                }
+            // Verificar si la expresión regular coincide con la licencia en el resultado actual
+            if (preg_match($expresion_regular, $resultado['licencia'])) {
+                // Devolver un array con la información correspondiente
+                return array(
+                    'id' => $resultado['id'],
+                    'flag' => $resultado['flag'],
+                    'name' => $resultado['name']
+                );
             }
-
-            return [
-                'id' => $country_code,
-                'flag' => $flag,
-                'country_name' => $country_name,
-            ];
         }
     }
 
-    return [
+    // Devolver "unknown", indicando que no se encontró una coincidencia
+    return array(
         'id' => 'unknown',
         'flag' => 'unknown',
-        'country_name' => 'unknown',
-    ];
+        'name' => 'unknown'
+    );
 }
 
+// PROCESA EL ADI
 
-$fechaActual = date('Ym');
 $archivoLog = dirname(__DIR__) . "/cluster.adi";
-$logContenido = file_get_contents($archivoLog);
+$anio = date('Y');
+$anio = "/$anio\d{4}/";
+$rutaArchivo = $archivoLog;
+$lineasArchivo = file($rutaArchivo, FILE_IGNORE_NEW_LINES);
+$qsos = array();
+foreach ($lineasArchivo as $linea) {
+    $linea = strtoupper($linea);
+    if (preg_match($anio, $linea)) {
+        $regex = '/<([A-Z0-9_]+):(\d+)(:[A-Z])?>([^<\s]+)\s*/';
+        preg_match_all($regex, $linea, $matches, PREG_SET_ORDER);
+        foreach ($matches as $i => $match) {
+            $field = $match[1];
+            $length = $match[2];
+            $type = $match[3];
+            $content = $match[4];
+            $qso[$field] = $content;
+            $is_last_element = ($i === count($matches) - 1);
+            if ($is_last_element || ($i < count($matches) - 1 && $matches[$i + 1][1] === 'EOR')) {
+                $qsos[] = $qso;
+                $qso = array();
+            }
+        }
+    }
+}
+
+// CALCULA LOS QSO POR DIA
+
 $conteoPorDia = array();
 for ($dia = 1; $dia <= 31; $dia++) {
     $conteoPorDia[$dia] = 0;
 }
-$patron = '/<QSO_DATE:?\d*:?\w?>?(\d{8})/i';
-preg_match_all($patron, $logContenido, $fechas);
-if (isset($fechas[1])) {
-    foreach ($fechas[1] as $fecha) {
-        $dia = intval(substr($fecha, 6, 2));
-        if ($dia >= 1 && $dia <= 31 && substr($fecha, 0, 6) == $fechaActual) {
+
+foreach ($qsos as $qso) {
+    if (isset($qso['QSO_DATE'])) { 
+    $qsoDate = $qso['QSO_DATE'];
+    $dia = intval(substr($qsoDate, 6, 2));
+    if ($dia >= 1 && $dia <= 31 && substr($qsoDate, 0, 6) == date('Ym')) {
             $conteoPorDia[$dia]++;
-        }
     }
+  }
 }
+
 $resultados = array();
 foreach ($conteoPorDia as $conteo) {
     $resultados[] = $conteo;
 }
+
 $cresu = $resultados;
+
+// MUESRTA LA TABLA DE LOS QSO POR DIA
+
+echo '<table border="2" align="center" style="width: 500px; font-size: 10px;">';
+echo '<tbody>';
+echo '<tr align="center"><td style="text-align:center; font-weight: normal; color: white;">Day</td>';
+for ($diax = 1; $diax <= 31; $diax++) {
+    $diaseros = str_pad($diax, 2, '0', STR_PAD_LEFT);
+    echo "<th style='text-align:center; font-weight: normal; color: white;'>$diaseros</th>";
+}
+echo '</tr>';
+echo '<tr align="center"><td style="text-align:center; font-weight: normal; color: white;">QSOs</td>';
+for ($diax = 0; $diax <= 30; $diax++) {
+    $repeticiones = isset($cresu[$diax]) ? $cresu[$diax] : 0;
+    echo "<td style='text-align:center; font-weight: normal; color: white;'>$repeticiones</td>";
+}
+echo '</tr>';
+echo '</table>';
+
+// GENERA UNA IMAGEN DE LOS QSO POR DIA
+
 $anchoImagen = 800;
 $altoImagen = 150;
 $margen = 40;
@@ -301,32 +352,61 @@ for ($i = 1; $i <= count($resultados); $i++) {
 }
 imagejpeg($imagen, 'grafico.jpg');
 imagedestroy($imagen);
-$rutaArchivo = $archivoLog;
-$lineasArchivo = file($rutaArchivo, FILE_IGNORE_NEW_LINES);
-$qsos = array();
-foreach ($lineasArchivo as $linea) {
-    $linea = strtoupper($linea);
-    if (preg_match("/$fechaActual/", $linea)) {
-        $regex = '/<([A-Z0-9_]+):(\d+)(:[A-Z])?>([^<\s]+)\s*/';
-        preg_match_all($regex, $linea, $matches, PREG_SET_ORDER);
-        foreach ($matches as $i => $match) {
-            $field = $match[1];
-            $length = $match[2];
-            $type = $match[3];
-            $content = $match[4];
-            $qso[$field] = $content;
-            $is_last_element = ($i === count($matches) - 1);
-            if ($is_last_element || ($i < count($matches) - 1 && $matches[$i + 1][1] === 'EOR')) {
-                $qsos[] = $qso;
-                $qso = array();
-            }
-        }
-    }
+
+// MUESTRA LA IMAGEN DE LOS QSO POR DIA
+
+echo '<center><img src="grafico.jpg" alt="grafico"></center>';
+
+// CALCULA LOS QSO POR MES
+
+$conteoPorMes = array();
+for ($mesx = 1; $mesx <= 12; $mesx++) {
+    $conteoPorMes[$mesx] = 0;
+foreach ($qsos as $qso) {
+    if (isset($qso['QSO_DATE'])) { 
+    $qsoDate = $qso['QSO_DATE'];
+    $mes = intval(substr($qsoDate, 4, 2));
+    //echo $qsoDate . " - " . $mes . "<br>";
+    if ($mes == $mesx) {
+    $conteoPorMes[$mesx]++;
+       }
+     }
+   }
 }
+
+$resultados = array();
+foreach ($conteoPorMes as $conteo) {
+    $resultados[] = $conteo;
+}
+
+$repeticionesPorMes = $resultados;
+
+// MUESTRA UNA TABLA DE LOS QSO POR MES
+
+echo '<table border="2" align="center" style="width: 600px;">';
+echo '<tr align="center"><th style="text-align:center; font-weight: normal; color: white; width: 10%;">Month</th>';
+
+$mesesDelAno = array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12');
+foreach ($mesesDelAno as $mes) {
+    echo "<th style='text-align:center; font-weight: normal; color: white; width: 7%;'> $mes</th>";
+}
+
+echo '</tr><tr align="center"><td style="text-align:center; font-weight: normal; color: white;">QSOs</td>';
+
+foreach ($repeticionesPorMes as $mes) {
+    echo "<td style='text-align:center; font-weight: normal; color: white; width: 7%;'>$mes</td>";
+}
+
+echo '</tr>';
+echo '</table><br>';
+
+// GENERA TABLA DEL ADI
+
 $fecha_actual = date('Ymd');
 $resultados = array();
+
 foreach ($qsos as $i => $qso) {
-    $qso_date = @$qso['QSO_DATE'];
+    $qso_date = $qso['QSO_DATE'];
     if ($qso_date !== $fecha_actual) {
         continue;
     }
@@ -354,56 +434,10 @@ foreach ($qsos as $i => $qso) {
         'freq' => $freq,
     );
 }
-echo '<table border="2" align="center" style="width: 500px; font-size: 10px;">';
-echo '<tbody>';
-echo '<tr align="center"><td style="text-align:center; font-weight: normal; color: white;">Day</td>';
-for ($diax = 1; $diax <= 31; $diax++) {
-    $diaseros = str_pad($diax, 2, '0', STR_PAD_LEFT);
-    echo "<th style='text-align:center; font-weight: normal; color: white;'>$diaseros</th>";
-}
-echo '</tr>';
-echo '<tr align="center"><td style="text-align:center; font-weight: normal; color: white;">QSOs</td>';
-for ($diax = 0; $diax <= 30; $diax++) {
-    $repeticiones = isset($cresu[$diax]) ? $cresu[$diax] : 0;
-    echo "<td style='text-align:center; font-weight: normal; color: white;'>$repeticiones</td>";
-}
-echo '</tr>';
-echo '</table>';
+
 $n = count($resultados);
 $resultados = array_reverse($resultados);
-$archivo = fopen($archivoLog, 'r');
-$anoActual = date('Y');
-$repeticionesPorMes = array();
-while ($linea = fgets($archivo)) {
-    $linea = strtoupper($linea);
-    if (preg_match('/<QSO_DATE:8>(\d{8})/', $linea, $matches)) {
-        $fecha = $matches[1];
-        $ano = substr($fecha, 0, 4);
-        $mes = substr($fecha, 4, 2);
-        if ($ano == $anoActual) {
-            $clave = $mes;
-            if (isset($repeticionesPorMes[$clave])) {
-                $repeticionesPorMes[$clave]++;
-            } else {
-                $repeticionesPorMes[$clave] = 1;
-            }
-        }
-    }
-}
-fclose($archivo);
-echo '<center><img src="grafico.jpg" alt="grafico"></center>';
-echo '<table border="2" align="center" style="width: 600px;">';
-echo '<tr align="center"><th style="text-align:center; font-weight: normal; color: white; width: 10%;">Month</th>';
-$mesesDelAno = array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12');
-foreach ($mesesDelAno as $mes) {
-    echo "<th style='text-align:center; font-weight: normal; color: white; width: 7%;'> $mes</th>";
-}
-echo '</tr>';
-echo '<tr align="center"><td style="text-align:center; font-weight: normal; color: white;">QSOs</td>';
-foreach ($mesesDelAno as $mes) {
-    $repeticiones = isset($repeticionesPorMes[$mes]) ? $repeticionesPorMes[$mes] : 0;
-    echo "<td style='text-align:center; font-weight: normal; color: white; width: 7%;'>$repeticiones</td>";
-}
+
 echo '</tr>';
 echo '</table><br>';
 $table = '<table align="center">';
@@ -439,7 +473,7 @@ foreach ($resultados as $i => $resultado) {
     $table .= '<td>' . $resultado['band'] . '</td>';
     $table .= '<td>' . $resultado['freq'] . '</td>';
     $table .= '<td> <img src="flag/' . $result['flag'] . '.png"></td>';
-    $table .= '<td>' . $result['country_name'] . '</td>';
+    $table .= '<td>' . $result['name'] . '</td>';
     if ($loc1 == "") {
         $dista = "No Grid";
     } else {
